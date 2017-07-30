@@ -235,8 +235,17 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         } else {
             ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-            String equation = item.coerceToText(this).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", "");
-            String[] eqnHS = equation.replaceAll("-+", "-").replaceAll("<+",">").replaceAll(">+",">").replaceAll("->", "=").replaceAll("→", "=").replaceAll("=+","=").split("=");
+            String equation = item.coerceToText(this).toString();
+            System.out.println(equation);
+            equation = equation.replaceAll("-+", "=").replaceAll("<+","=").replaceAll(">+","=")
+                    .replaceAll("→+", "=").replaceAll("←+", "=")
+                    .replaceAll("↔+", "=").replaceAll("⇄+", "=")
+                    .replaceAll("⇌+", "=");
+            System.out.println(equation);
+            equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=]", "");
+            System.out.println(equation);
+            equation = equation.replaceAll("=+","=");
+            String[] eqnHS = equation.split("=");
             if (eqnHS.length != 2) {
                 if (toast != null) {
                     toast.cancel();
