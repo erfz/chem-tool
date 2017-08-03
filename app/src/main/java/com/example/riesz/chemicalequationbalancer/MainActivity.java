@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +30,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainactivity_layout);
         final EditText LHSEqn = (EditText) findViewById(R.id.leftEquation);
         final EditText RHSEqn = (EditText) findViewById(R.id.rightEquation);
         final Button balanceButton = (Button) findViewById(R.id.balance_button);
+
+        layout.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View view, MotionEvent event){
+                if (event.getAction() == MotionEvent.ACTION_UP){
+                    layout.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         LHSEqn.addTextChangedListener(new TextWatcher() {
             @Override
@@ -119,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
             return;
         }
+        if (getCurrentFocus() != null){
+            getCurrentFocus().clearFocus();
+        }
         intent.putExtra(EXTRA_MESSAGE, equation);
         startActivity(intent);
     }
@@ -133,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         }
         toast = Toast.makeText(this, "Equation Cleared", Toast.LENGTH_SHORT);
         toast.show();
-        InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(LHSEqn, InputMethodManager.SHOW_IMPLICIT);
     }
     public void addPlus(View view) {
@@ -141,13 +160,9 @@ public class MainActivity extends AppCompatActivity {
         EditText RHSEqn = (EditText) findViewById(R.id.rightEquation);
         if (LHSEqn.hasFocus()){
             LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "+");
-            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(LHSEqn, InputMethodManager.SHOW_IMPLICIT);
         }
         if (RHSEqn.hasFocus()){
             RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "+");
-            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(RHSEqn, InputMethodManager.SHOW_IMPLICIT);
         }
     }
     public void addParentheses(View view) {
@@ -156,14 +171,10 @@ public class MainActivity extends AppCompatActivity {
         if (LHSEqn.hasFocus()){
             LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "()");
             LHSEqn.setSelection(LHSEqn.getSelectionStart() - 1);
-            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(LHSEqn, InputMethodManager.SHOW_IMPLICIT);
         }
         if (RHSEqn.hasFocus()){
             RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "()");
             RHSEqn.setSelection(RHSEqn.getSelectionStart() - 1);
-            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(RHSEqn, InputMethodManager.SHOW_IMPLICIT);
         }
     }
     public void pasteLeft(View view){
@@ -187,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             LHSEqn.setText(item.coerceToText(this).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
             LHSEqn.setSelection(LHSEqn.getText().length());
             LHSEqn.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(LHSEqn, InputMethodManager.SHOW_IMPLICIT);
         }
     }
@@ -212,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
             RHSEqn.setText(item.coerceToText(this).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
             RHSEqn.setSelection(RHSEqn.getText().length());
             RHSEqn.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(RHSEqn, InputMethodManager.SHOW_IMPLICIT);
         }
     }
