@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
         EditText RHSEqn = (EditText) findViewById(R.id.rightEquation);
         LHSEqn.setText("");
         RHSEqn.setText("");
-        LHSEqn.requestFocus();
         if (toast != null){
             toast.cancel();
         }
