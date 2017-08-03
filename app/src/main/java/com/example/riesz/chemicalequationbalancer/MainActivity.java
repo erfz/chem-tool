@@ -33,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
         final RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainactivity_layout);
         final EditText LHSEqn = (EditText) findViewById(R.id.leftEquation);
         final EditText RHSEqn = (EditText) findViewById(R.id.rightEquation);
+        final Button pasteEquationButton = (Button) findViewById(R.id.equationpaste_button);
+        final Button clearButton = (Button) findViewById(R.id.clear_button);
         final Button balanceButton = (Button) findViewById(R.id.balance_button);
+
+        clearButton.setVisibility(View.GONE);
 
         layout.setOnTouchListener(new View.OnTouchListener(){
             @Override
@@ -61,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (!LHSEqn.getText().toString().isEmpty() || !RHSEqn.getText().toString().isEmpty()){
+                    pasteEquationButton.setVisibility(View.GONE);
+                    clearButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    clearButton.setVisibility(View.GONE);
+                    pasteEquationButton.setVisibility(View.VISIBLE);
+                }
+
                 for (int i = 0; i < s.length(); ++i){
                     if (i == 0 && Character.isLowerCase(s.charAt(i))){
                         String str = s.subSequence(i, i + 1).toString().toUpperCase();
@@ -91,6 +104,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (!LHSEqn.getText().toString().isEmpty() || !RHSEqn.getText().toString().isEmpty()){
+                    pasteEquationButton.setVisibility(View.GONE);
+                    clearButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    clearButton.setVisibility(View.GONE);
+                    pasteEquationButton.setVisibility(View.VISIBLE);
+                }
+
                 for (int i = 0; i < s.length(); ++i){
                     if (i == 0 && Character.isLowerCase(s.charAt(i))){
                         String str = s.subSequence(i, i + 1).toString().toUpperCase();
@@ -152,8 +174,6 @@ public class MainActivity extends AppCompatActivity {
         }
         toast = Toast.makeText(this, "Equation Cleared", Toast.LENGTH_SHORT);
         toast.show();
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(LHSEqn, InputMethodManager.SHOW_IMPLICIT);
     }
     public void addPlus(View view) {
         EditText LHSEqn = (EditText) findViewById(R.id.leftEquation);
@@ -196,10 +216,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
             LHSEqn.setText(item.coerceToText(this).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
-            LHSEqn.setSelection(LHSEqn.getText().length());
-            LHSEqn.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(LHSEqn, InputMethodManager.SHOW_IMPLICIT);
         }
     }
     public void pasteRight(View view){
@@ -221,10 +237,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
             RHSEqn.setText(item.coerceToText(this).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
-            RHSEqn.setSelection(RHSEqn.getText().length());
-            RHSEqn.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(RHSEqn, InputMethodManager.SHOW_IMPLICIT);
         }
     }
     public void pasteEquation(View view){
