@@ -83,7 +83,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/equation_yields_symbol"
             android:id="@+id/equation_yields_symbol"
-            android:layout_below="@+id/enter_equation_message"
+            android:layout_alignBaseline="@+id/leftEquation"
             android:layout_centerHorizontal="true" />
 
         <EditText
