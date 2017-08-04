@@ -1,146 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:clickable="true"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:id="@+id/mainactivity_layout"
-    tools:context="com.example.riesz.chemicalequationbalancer.MainActivity">
+    android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/equationpaste_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/balance_button"
-        android:layout_centerHorizontal="true"
-        android:text="@string/equationpaste_button"
-        android:textAllCaps="false"
-        android:onClick="pasteEquation" />
-
-    <Button
-        android:id="@+id/rightpaste_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/enter_equation_message"
-        android:layout_alignRight="@+id/enter_equation_message"
-        android:layout_below="@+id/leftEquation"
-        android:background="?android:attr/actionModePasteDrawable"
-        android:minHeight="48dp"
-        android:minWidth="44dp"
-        android:onClick="pasteRight" />
-
-    <Button
-        android:id="@+id/leftpaste_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/enter_equation_message"
-        android:layout_alignStart="@+id/enter_equation_message"
-        android:layout_below="@+id/leftEquation"
-        android:background="?android:attr/actionModePasteDrawable"
-        android:minHeight="48dp"
-        android:minWidth="44dp"
-        android:onClick="pasteLeft" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/enter_equation_message"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/enter_equation_message" />
-
-    <EditText
-        android:inputType="textNoSuggestions|textVisiblePassword"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="@string/LHSEqnHint"
-        android:id="@+id/leftEquation"
-        android:layout_below="@+id/enter_equation_message"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:singleLine="true"
-        android:imeOptions="actionNext"
-        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[] "
-        android:layout_toStartOf="@+id/equation_yields_symbol"
-        android:layout_toLeftOf="@+id/equation_yields_symbol" />
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/mainactivity_layout"
+        tools:context="com.example.riesz.chemicalequationbalancer.MainActivity">
 
-    <TextView
-        android:textSize="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/equation_yields_symbol"
-        android:id="@+id/equation_yields_symbol"
-        android:layout_below="@+id/enter_equation_message"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/equationpaste_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/balance_button"
+            android:layout_centerHorizontal="true"
+            android:text="@string/equationpaste_button"
+            android:textAllCaps="false"
+            android:onClick="pasteEquation" />
 
-    <EditText
-        android:inputType="textNoSuggestions|textVisiblePassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="@string/RHSEqnHint"
-        android:id="@+id/rightEquation"
-        android:layout_alignBottom="@+id/leftEquation"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:singleLine="true"
-        android:imeOptions="actionGo"
-        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+() "
-        android:layout_toRightOf="@+id/equation_yields_symbol"
-        android:layout_toEndOf="@+id/equation_yields_symbol" />
+        <Button
+            android:id="@+id/rightpaste_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/enter_equation_message"
+            android:layout_alignRight="@+id/enter_equation_message"
+            android:layout_below="@+id/leftEquation"
+            android:background="?android:attr/actionModePasteDrawable"
+            android:minHeight="48dp"
+            android:minWidth="44dp"
+            android:onClick="pasteRight" />
 
-    <Button
-        android:onClick="clearEqn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="@string/clear_button"
-        android:id="@+id/clear_button"
-        android:layout_below="@+id/balance_button"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/leftpaste_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/enter_equation_message"
+            android:layout_alignStart="@+id/enter_equation_message"
+            android:layout_below="@+id/leftEquation"
+            android:background="?android:attr/actionModePasteDrawable"
+            android:minHeight="48dp"
+            android:minWidth="44dp"
+            android:onClick="pasteLeft" />
 
-    <Button
-        android:onClick="getBalancedEquation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="@string/balance_button"
-        android:id="@+id/balance_button"
-        android:layout_below="@+id/plus_button"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/enter_equation_message"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/enter_equation_message" />
 
-    <Button
-        android:onClick="addParentheses"
-        android:text="@string/parentheses_button"
-        android:minHeight="50dp"
-        android:minWidth="0dp"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/parentheses_button"
-        android:layout_toRightOf="@+id/plus_button"
-        android:layout_toEndOf="@+id/plus_button"
-        android:layout_alignBottom="@+id/plus_button"/>
+        <EditText
+            android:inputType="textNoSuggestions|textVisiblePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/LHSEqnHint"
+            android:id="@+id/leftEquation"
+            android:layout_below="@+id/enter_equation_message"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[] "
+            android:layout_toStartOf="@+id/equation_yields_symbol"
+            android:layout_toLeftOf="@+id/equation_yields_symbol" />
 
-    <Button
-        android:onClick="addPlus"
-        android:minHeight="50dp"
-        android:minWidth="44dp"
-        android:textSize="20sp"
-        android:text="@string/plus_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/plus_button"
-        android:layout_below="@+id/leftEquation"
-        android:layout_alignLeft="@+id/balance_button"
-        android:layout_alignStart="@+id/balance_button" />
-</RelativeLayout>
+        <TextView
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/equation_yields_symbol"
+            android:id="@+id/equation_yields_symbol"
+            android:layout_below="@+id/enter_equation_message"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:inputType="textNoSuggestions|textVisiblePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/RHSEqnHint"
+            android:id="@+id/rightEquation"
+            android:layout_alignBottom="@+id/leftEquation"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:singleLine="true"
+            android:imeOptions="actionGo"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+() "
+            android:layout_toRightOf="@+id/equation_yields_symbol"
+            android:layout_toEndOf="@+id/equation_yields_symbol" />
+
+        <Button
+            android:onClick="clearEqn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="@string/clear_button"
+            android:id="@+id/clear_button"
+            android:layout_below="@+id/balance_button"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:onClick="getBalancedEquation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="@string/balance_button"
+            android:id="@+id/balance_button"
+            android:layout_below="@+id/plus_button"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:onClick="addParentheses"
+            android:text="@string/parentheses_button"
+            android:minHeight="50dp"
+            android:minWidth="0dp"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/parentheses_button"
+            android:layout_toRightOf="@+id/plus_button"
+            android:layout_toEndOf="@+id/plus_button"
+            android:layout_alignBottom="@+id/plus_button"/>
+
+        <Button
+            android:onClick="addPlus"
+            android:minHeight="50dp"
+            android:minWidth="44dp"
+            android:textSize="20sp"
+            android:text="@string/plus_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/plus_button"
+            android:layout_below="@+id/leftEquation"
+            android:layout_alignLeft="@+id/balance_button"
+            android:layout_alignStart="@+id/balance_button" />
+    </RelativeLayout>
+
+</ScrollView>

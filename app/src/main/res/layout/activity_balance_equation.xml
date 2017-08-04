@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.riesz.chemicalequationbalancer.BalanceEquationActivity"
-    android:id="@+id/activity_balance_equation">
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/balanced_message"
-        android:id="@+id/balanced_message"
-        android:textSize="28sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/balanced_message"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/horizontalScrollView">
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.example.riesz.chemicalequationbalancer.BalanceEquationActivity"
+        android:id="@+id/activity_balance_equation">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:id="@+id/balanced_equation" />
-    </HorizontalScrollView>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/balanced_message"
+            android:id="@+id/balanced_message"
+            android:textSize="28sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <Button
-        android:onClick="copyEqn"
-        android:text="@string/copy_button"
-        android:textAllCaps="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/horizontalScrollView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/copy_button" />
-</RelativeLayout>
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/balanced_message"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/horizontalScrollView">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:id="@+id/balanced_equation" />
+        </HorizontalScrollView>
+
+        <Button
+            android:onClick="copyEqn"
+            android:text="@string/copy_button"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/horizontalScrollView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/copy_button" />
+    </RelativeLayout>
+
+</ScrollView>
