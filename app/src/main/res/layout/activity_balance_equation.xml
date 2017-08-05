@@ -14,21 +14,11 @@
         tools:context="com.example.riesz.chemicalequationbalancer.BalanceEquationActivity"
         android:id="@+id/activity_balance_equation">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/balanced_message"
-            android:id="@+id/balanced_message"
-            android:textSize="28sp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/balanced_message"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/horizontalScrollView">
 

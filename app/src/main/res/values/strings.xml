@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Chemical Equation Balancer</string>
-    <string name="enter_equation_message">Enter the chemical equation</string>
+    <string name="main_activity">Enter Equation</string>
+    <string name="balanceequation_activity">Balanced Equation</string>
     <string name="equationpaste_button">Paste Eqn</string>
     <string name="equation_yields_symbol">→</string>
     <string name="balance_button">Balance</string>
-    <string name="balanced_message">Balanced equation:</string>
     <string name="clear_button">Clear</string>
     <string name="LHSEqnHint">Ba3N2 + H2O</string>
     <string name="RHSEqnHint">Ba(OH)2 + NH3</string>

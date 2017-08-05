@@ -31,34 +31,29 @@
             android:id="@+id/rightpaste_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/enter_equation_message"
-            android:layout_alignRight="@+id/enter_equation_message"
-            android:layout_below="@+id/leftEquation"
             android:background="?android:attr/actionModePasteDrawable"
             android:minHeight="48dp"
             android:minWidth="44dp"
-            android:onClick="pasteRight" />
+            android:onClick="pasteRight"
+            android:layout_below="@+id/leftEquation"
+            android:layout_toRightOf="@+id/balance_button"
+            android:layout_toEndOf="@+id/balance_button"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp" />
 
         <Button
             android:id="@+id/leftpaste_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/enter_equation_message"
-            android:layout_alignStart="@+id/enter_equation_message"
-            android:layout_below="@+id/leftEquation"
             android:background="?android:attr/actionModePasteDrawable"
             android:minHeight="48dp"
             android:minWidth="44dp"
-            android:onClick="pasteLeft" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/enter_equation_message"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/enter_equation_message" />
+            android:onClick="pasteLeft"
+            android:layout_below="@+id/leftEquation"
+            android:layout_toLeftOf="@+id/balance_button"
+            android:layout_toStartOf="@+id/balance_button"
+            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp" />
 
         <EditText
             android:inputType="textNoSuggestions|textVisiblePassword"
@@ -67,7 +62,7 @@
             android:gravity="center"
             android:hint="@string/LHSEqnHint"
             android:id="@+id/leftEquation"
-            android:layout_below="@+id/enter_equation_message"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:singleLine="true"
