@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle(R.string.main_activity);
 
         final RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainactivity_layout);
         final EditText LHSEqn = (EditText) findViewById(R.id.leftEquation);
