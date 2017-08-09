@@ -5,6 +5,7 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle(R.string.main_activity);
 
-        final RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainactivity_layout);
+        final ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainactivity_layout);
         final EditText LHSEqn = (EditText) findViewById(R.id.leftEquation);
         final EditText RHSEqn = (EditText) findViewById(R.id.rightEquation);
         final Button pasteEquationButton = (Button) findViewById(R.id.equationpaste_button);
