@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Chemical Equation Balancer</string>
-    <string name="main_activity">Enter Equation</string>
-    <string name="balanceequation_activity">Balanced Equation</string>
     <string name="equationpaste_button">Paste Eqn</string>
     <string name="equation_yields_symbol">→</string>
     <string name="balance_button">Balance</string>
