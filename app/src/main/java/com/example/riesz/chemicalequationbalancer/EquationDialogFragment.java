@@ -1,5 +1,6 @@
 package com.example.riesz.chemicalequationbalancer;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -62,5 +63,15 @@ public class EquationDialogFragment extends DialogFragment {
         });
 
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
     }
 }
