@@ -6,10 +6,10 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.TabLayout
-        app:tabBackground="@color/colorPrimaryDark"
+        app:tabBackground="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorAccent"
-        app:tabSelectedTextColor="#FFFFFF"
-        app:tabTextColor="#FFFFFF"
+        app:tabSelectedTextColor="@color/colorText"
+        app:tabTextColor="@color/colorText"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
