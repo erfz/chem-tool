@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.TabLayout
-        app:tabBackground="@color/colorPrimary"
+        android:background="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorAccent"
         app:tabSelectedTextColor="@color/colorText"
         app:tabTextColor="@color/colorText"
