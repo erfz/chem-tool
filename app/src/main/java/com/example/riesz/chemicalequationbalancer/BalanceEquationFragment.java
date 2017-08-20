@@ -36,10 +36,12 @@ public class BalanceEquationFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_KEYBOARD_STATE = "keyboard_state";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private boolean mKeyboardState;
 
     private Toast toast = null;
     private ConstraintLayout layout;
@@ -123,6 +125,19 @@ public class BalanceEquationFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        if (savedInstanceState != null){
+            mKeyboardState = savedInstanceState.getBoolean(ARG_KEYBOARD_STATE, false);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        boolean keyboardState = false;
+        if (LHSEqn.hasFocus() || RHSEqn.hasFocus()){
+            keyboardState = true;
+        }
+        outState.putBoolean(ARG_KEYBOARD_STATE, keyboardState);
     }
 
     @Override
@@ -143,6 +158,11 @@ public class BalanceEquationFragment extends Fragment {
         pasteRightButton = (Button) rootView.findViewById(R.id.rightpaste_button);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
 
+        if (mKeyboardState){
+            InputMethodManager imm = (InputMethodManager)
+                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(getActivity().getCurrentFocus(), InputMethodManager.SHOW_FORCED);
+        }
         clearButton.setVisibility(View.GONE);
         LHSEqn.addTextChangedListener(eqnTextWatcher);
         RHSEqn.addTextChangedListener(eqnTextWatcher);
