@@ -99,7 +99,6 @@
             android:hint="@string/RHSEqnHint"
             android:id="@+id/rightEquation"
             android:singleLine="true"
-            android:imeOptions="actionGo"
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+() "
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="8dp"

@@ -330,18 +330,6 @@ public class BalanceEquationFragment extends Fragment {
             }
         });
 
-        RHSEqn.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    balanceButton.performClick();
-                    handled = true;
-                }
-                return handled;
-            }
-        });
-
         return rootView;
     }
 
