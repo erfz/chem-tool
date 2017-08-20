@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements BalanceEquationFr
     ChemUtilsPagerAdapter mChemUtilsPagerAdapter;
     ViewPager mViewPager;
     TabLayout tabLayout;
+    private int defaultTabPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,35 @@ public class MainActivity extends AppCompatActivity implements BalanceEquationFr
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
+        for (int i = 0; i < tabLayout.getTabCount(); ++i){
+            if (i != defaultTabPosition){
+                LinearLayout tabViewGroup = (LinearLayout)((ViewGroup) tabLayout.getChildAt(0)).getChildAt(i);
+                TextView tabTextView = (TextView) tabViewGroup.getChildAt(1);
+                tabTextView.setAlpha(0.5f);
+            }
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                LinearLayout tabViewGroup = (LinearLayout)
+                        ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(tab.getPosition());
+                TextView tabTextView = (TextView) tabViewGroup.getChildAt(1);
+                tabTextView.setAlpha(1.0f);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                LinearLayout tabViewGroup = (LinearLayout)
+                        ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(tab.getPosition());
+                TextView tabTextView = (TextView) tabViewGroup.getChildAt(1);
+                tabTextView.setAlpha(0.5f);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
