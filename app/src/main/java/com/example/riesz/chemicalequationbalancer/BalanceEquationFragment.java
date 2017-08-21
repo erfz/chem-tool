@@ -10,16 +10,13 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -133,10 +130,9 @@ public class BalanceEquationFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
-        boolean keyboardState = false;
-        if (LHSEqn.hasFocus() || RHSEqn.hasFocus()){
-            keyboardState = true;
-        }
+        InputMethodManager imm = (InputMethodManager)
+                getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        boolean keyboardState = imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
         outState.putBoolean(ARG_KEYBOARD_STATE, keyboardState);
     }
 
@@ -322,7 +318,8 @@ public class BalanceEquationFragment extends Fragment {
             public boolean onTouch(View view, MotionEvent event){
                 if (event.getAction() == MotionEvent.ACTION_UP){
                     layout.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager)
+                            getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
                     return true;
                 }
