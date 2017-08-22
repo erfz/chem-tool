@@ -42,7 +42,7 @@ public class ChemUtilsPagerAdapter extends FragmentPagerAdapter {
                         R.string.balance_page_title);
             case 1:
                 return context.getResources().getString(
-                        R.string.constants_and_equations_page_title);
+                        R.string.constants_equations_page_title);
             default:
                 return null;
         }
