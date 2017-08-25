@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements BalanceEquationFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements
+        BalanceEquationFragment.OnFragmentInteractionListener, ConstantsEquationsFragment.OnFragmentInteractionListener {
     ChemUtilsPagerAdapter mChemUtilsPagerAdapter;
     ViewPager mViewPager;
     TabLayout tabLayout;

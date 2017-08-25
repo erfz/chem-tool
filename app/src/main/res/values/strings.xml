@@ -11,4 +11,5 @@
     <string name="copy_button">Copy</string>
     <string name="plus_button">+</string>
     <string name="parentheses_button">( )</string>
+    <string name="constants_header">Constants</string>
 </resources>

@@ -23,7 +23,7 @@ public class ChemUtilsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new BalanceEquationFragment();
             case 1:
-                return new BalanceEquationFragment(); // TODO: return actual view
+                return new ConstantsEquationsFragment(); // TODO: return actual view
             default:
                 return null;
         }
