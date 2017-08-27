@@ -12,4 +12,5 @@
     <string name="plus_button">+</string>
     <string name="parentheses_button">( )</string>
     <string name="constants_header">Constants</string>
+    <string name="potentials_header">Reduction Potentials</string>
 </resources>
