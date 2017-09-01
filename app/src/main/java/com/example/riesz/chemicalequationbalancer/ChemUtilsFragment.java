@@ -23,12 +23,12 @@ import android.widget.Toast;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BalanceEquationFragment.OnFragmentInteractionListener} interface
+ * {@link ChemUtilsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BalanceEquationFragment#newInstance} factory method to
+ * Use the {@link ChemUtilsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BalanceEquationFragment extends Fragment {
+public class ChemUtilsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -93,7 +93,7 @@ public class BalanceEquationFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public BalanceEquationFragment() {
+    public ChemUtilsFragment() {
         // Required empty public constructor
     }
 
@@ -103,11 +103,11 @@ public class BalanceEquationFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BalanceEquationFragment.
+     * @return A new instance of fragment ChemUtilsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BalanceEquationFragment newInstance(String param1, String param2) {
-        BalanceEquationFragment fragment = new BalanceEquationFragment();
+    public static ChemUtilsFragment newInstance(String param1, String param2) {
+        ChemUtilsFragment fragment = new ChemUtilsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -140,7 +140,7 @@ public class BalanceEquationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_balance_equation, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_chem_utils, container, false);
 
         layout = (ConstraintLayout) rootView.findViewById(R.id.balanceequation_layout);
         LHSEqn = (EditText) rootView.findViewById(R.id.leftEquation);

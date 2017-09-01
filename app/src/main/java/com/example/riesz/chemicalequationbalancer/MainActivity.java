@@ -1,6 +1,5 @@
 package com.example.riesz.chemicalequationbalancer;
 
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements
-        BalanceEquationFragment.OnFragmentInteractionListener, ConstantsEquationsFragment.OnFragmentInteractionListener {
-    ChemUtilsPagerAdapter mChemUtilsPagerAdapter;
+        ChemUtilsFragment.OnFragmentInteractionListener, ConstantsEquationsFragment.OnFragmentInteractionListener {
+    MainPagerAdapter mChemUtilsPagerAdapter;
     ViewPager mViewPager;
     TabLayout tabLayout;
     private int defaultTabPosition = 0;
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mChemUtilsPagerAdapter = new ChemUtilsPagerAdapter(
+        mChemUtilsPagerAdapter = new MainPagerAdapter(
                         getSupportFragmentManager(), this);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mChemUtilsPagerAdapter);
