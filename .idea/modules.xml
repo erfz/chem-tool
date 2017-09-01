@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chemical-equation-balancer.iml" filepath="$PROJECT_DIR$/chemical-equation-balancer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chem-tool.iml" filepath="$PROJECT_DIR$/chem-tool.iml" />
     </modules>
   </component>
 </project>
