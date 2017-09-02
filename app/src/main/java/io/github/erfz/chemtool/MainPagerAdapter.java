@@ -1,4 +1,4 @@
-package com.example.riesz.chemicalequationbalancer;
+package io.github.erfz.chemtool;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

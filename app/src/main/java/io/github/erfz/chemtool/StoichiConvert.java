@@ -1,4 +1,4 @@
-package com.example.riesz.chemicalequationbalancer;
+package io.github.erfz.chemtool;
 
 import java.util.HashMap;
 
