@@ -1,4 +1,4 @@
-# Chemical Equation Balancer
+# ChemTool
 Made by Jason Guo
 # To-do
 - Stoichiometric conversions
