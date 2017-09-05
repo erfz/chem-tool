@@ -28,7 +28,7 @@ import android.widget.Toast;
  * Use the {@link ChemUtilsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChemUtilsFragment extends Fragment {
+public class ChemUtilsFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,6 +52,7 @@ public class ChemUtilsFragment extends Fragment {
     private Button pasteLeftButton;
     private Button pasteRightButton;
     private ClipboardManager clipboard;
+    private InputMethodManager imm;
     private final TextWatcher eqnTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -130,8 +131,6 @@ public class ChemUtilsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
-        InputMethodManager imm = (InputMethodManager)
-                getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         boolean keyboardState = imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
         outState.putBoolean(ARG_KEYBOARD_STATE, keyboardState);
     }
@@ -142,184 +141,39 @@ public class ChemUtilsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_chem_utils, container, false);
 
-        layout = (ConstraintLayout) rootView.findViewById(R.id.balanceequation_layout);
-        LHSEqn = (EditText) rootView.findViewById(R.id.leftEquation);
-        RHSEqn = (EditText) rootView.findViewById(R.id.rightEquation);
-        pasteEquationButton = (Button) rootView.findViewById(R.id.equationpaste_button);
+        layout = (ConstraintLayout) rootView.findViewById(R.id.balance_equation_layout);
+        LHSEqn = (EditText) rootView.findViewById(R.id.left_equation_edittext);
+        RHSEqn = (EditText) rootView.findViewById(R.id.right_equation_edittext);
+        pasteEquationButton = (Button) rootView.findViewById(R.id.equation_paste_button);
         clearButton = (Button) rootView.findViewById(R.id.clear_button);
         balanceButton = (Button) rootView.findViewById(R.id.balance_button);
         plusButton = (Button) rootView.findViewById(R.id.plus_button);
         parenthesesButton = (Button) rootView.findViewById(R.id.parentheses_button);
-        pasteLeftButton = (Button) rootView.findViewById(R.id.leftpaste_button);
-        pasteRightButton = (Button) rootView.findViewById(R.id.rightpaste_button);
+        pasteLeftButton = (Button) rootView.findViewById(R.id.left_paste_button);
+        pasteRightButton = (Button) rootView.findViewById(R.id.right_paste_button);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        balanceButton.setOnClickListener(this);
+        clearButton.setOnClickListener(this);
+        plusButton.setOnClickListener(this);
+        parenthesesButton.setOnClickListener(this);
+        pasteLeftButton.setOnClickListener(this);
+        pasteRightButton.setOnClickListener(this);
+        pasteEquationButton.setOnClickListener(this);
 
         if (mKeyboardState){
-            InputMethodManager imm = (InputMethodManager)
-                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(getActivity().getCurrentFocus(), InputMethodManager.SHOW_FORCED);
         }
         clearButton.setVisibility(View.GONE);
         LHSEqn.addTextChangedListener(eqnTextWatcher);
         RHSEqn.addTextChangedListener(eqnTextWatcher);
 
-        balanceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String equation = LHSEqn.getText().toString() + "=" + RHSEqn.getText().toString();
-                try {
-                    equation = EquationBalance.balanceEquation(equation);
-                } catch (Exception e) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Invalid Equation!", Toast.LENGTH_SHORT);
-                    toast.show();
-                    return;
-                }
-                if (getActivity().getCurrentFocus() != null){
-                    getActivity().getCurrentFocus().clearFocus();
-                }
-                EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
-                f.show(getFragmentManager(), "equation dialog");
-            }
-        });
-
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LHSEqn.setText("");
-                RHSEqn.setText("");
-                if (toast != null){
-                    toast.cancel();
-                }
-                toast = Toast.makeText(getActivity(), "Equation Cleared", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
-
-        plusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (LHSEqn.hasFocus()){
-                    LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "+");
-                }
-                if (RHSEqn.hasFocus()){
-                    RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "+");
-                }
-            }
-        });
-
-        parenthesesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (LHSEqn.hasFocus()){
-                    LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "()");
-                    LHSEqn.setSelection(LHSEqn.getSelectionStart() - 1);
-                }
-                if (RHSEqn.hasFocus()){
-                    RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "()");
-                    RHSEqn.setSelection(RHSEqn.getSelectionStart() - 1);
-                }
-            }
-        });
-
-        pasteLeftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!(clipboard.hasPrimaryClip())) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain anything!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
-                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain usable text!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                    LHSEqn.setText(item.coerceToText(getActivity()).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
-                }
-            }
-        });
-
-        pasteRightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!(clipboard.hasPrimaryClip())) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain anything!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
-                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain usable text!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                    RHSEqn.setText(item.coerceToText(getActivity()).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
-                }
-            }
-        });
-
-        pasteEquationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!(clipboard.hasPrimaryClip())) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain anything!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
-                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain usable text!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                    String equation = item.coerceToText(getActivity()).toString();
-                    System.out.println(equation);
-                    equation = equation.replaceAll("-+", "=").replaceAll("<+","=").replaceAll(">+","=")
-                            .replaceAll("→+", "=").replaceAll("←+", "=")
-                            .replaceAll("↔+", "=").replaceAll("⇄+", "=")
-                            .replaceAll("⇌+", "=");
-                    System.out.println(equation);
-                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=]", "");
-                    System.out.println(equation);
-                    equation = equation.replaceAll("=+","=");
-                    String[] eqnHS = equation.split("=");
-                    if (eqnHS.length != 2) {
-                        if (toast != null) {
-                            toast.cancel();
-                        }
-                        toast = Toast.makeText(getActivity(), "Invalid equation!", Toast.LENGTH_SHORT);
-                        toast.show();
-                        return;
-                    }
-                    LHSEqn.setText(eqnHS[0]);
-                    RHSEqn.setText(eqnHS[1]);
-                }
-            }
-        });
-
         layout.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View view, MotionEvent event){
                 if (event.getAction() == MotionEvent.ACTION_UP){
                     layout.requestFocus();
-                    InputMethodManager imm = (InputMethodManager)
-                            getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
                     return true;
                 }
@@ -352,6 +206,141 @@ public class ChemUtilsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        String equation = null;
+        switch (id) {
+            case R.id.balance_button:
+                equation = LHSEqn.getText().toString() + "=" + RHSEqn.getText().toString();
+                try {
+                    equation = EquationBalance.balanceEquation(equation);
+                } catch (Exception e) {
+                    if (toast != null){
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getActivity(), "Invalid Equation!", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                if (getActivity().getCurrentFocus() != null){
+                    getActivity().getCurrentFocus().clearFocus();
+                }
+                EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
+                f.show(getFragmentManager(), "equation dialog");
+                break;
+            case R.id.clear_button:
+                LHSEqn.setText("");
+                RHSEqn.setText("");
+                if (toast != null){
+                    toast.cancel();
+                }
+                toast = Toast.makeText(getActivity(), "Equation Cleared", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+            case R.id.plus_button:
+                if (LHSEqn.hasFocus()){
+                    LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "+");
+                }
+                if (RHSEqn.hasFocus()){
+                    RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "+");
+                }
+                break;
+            case R.id.parentheses_button:
+                if (LHSEqn.hasFocus()){
+                    LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "()");
+                    LHSEqn.setSelection(LHSEqn.getSelectionStart() - 1);
+                }
+                if (RHSEqn.hasFocus()){
+                    RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "()");
+                    RHSEqn.setSelection(RHSEqn.getSelectionStart() - 1);
+                }
+                break;
+            case R.id.left_paste_button:
+                if (!(clipboard.hasPrimaryClip())) {
+                    if (toast != null){
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain anything!", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
+                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
+                    if (toast != null){
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain usable text!", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                    LHSEqn.setText(item.coerceToText(getActivity()).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
+                    if (LHSEqn.hasFocus()){
+                        LHSEqn.setSelection(LHSEqn.length());
+                    }
+                }
+                break;
+            case R.id.right_paste_button:
+                if (!(clipboard.hasPrimaryClip())) {
+                    if (toast != null){
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain anything!", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
+                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
+                    if (toast != null){
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain usable text!", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                    RHSEqn.setText(item.coerceToText(getActivity()).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
+                    if (RHSEqn.hasFocus()){
+                        RHSEqn.setSelection(RHSEqn.length());
+                    }
+                }
+                break;
+            case R.id.equation_paste_button:
+                if (!(clipboard.hasPrimaryClip())) {
+                    if (toast != null){
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain anything!", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
+                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
+                    if (toast != null){
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain usable text!", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                    equation = item.coerceToText(getActivity()).toString();
+                    equation = equation.replaceAll("-+", "=").replaceAll("<+","=").replaceAll(">+","=")
+                            .replaceAll("→+", "=").replaceAll("←+", "=")
+                            .replaceAll("↔+", "=").replaceAll("⇄+", "=")
+                            .replaceAll("⇌+", "=");
+                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=]", "");
+                    equation = equation.replaceAll("=+","=");
+                    String[] eqnHS = equation.split("=");
+                    if (eqnHS.length != 2) {
+                        if (toast != null) {
+                            toast.cancel();
+                        }
+                        toast = Toast.makeText(getActivity(), "Invalid equation!", Toast.LENGTH_SHORT);
+                        toast.show();
+                        return;
+                    }
+                    LHSEqn.setText(eqnHS[0]);
+                    RHSEqn.setText(eqnHS[1]);
+                    LHSEqn.setSelection(LHSEqn.length());
+                    RHSEqn.setSelection(RHSEqn.length());
+                }
+                break;
+        }
     }
 
     /**

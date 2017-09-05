@@ -14,7 +14,7 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:id="@+id/balanceequation_layout">
+        android:id="@+id/balance_equation_layout">
 
         <include
             layout="@layout/equation_balance_cardview"
