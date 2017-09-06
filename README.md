@@ -4,6 +4,7 @@ Made by Jason Guo
 - Stoichi. (molecules alone and reaction calculations)
 - Add more drawables
 - Add periodic table
+- Fragment operations
 - Real log calls
 - AppBarLayout
 - Floating labels (?)
