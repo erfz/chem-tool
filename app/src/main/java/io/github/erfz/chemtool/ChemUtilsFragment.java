@@ -49,8 +49,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private Button balanceButton;
     private Button plusButton;
     private Button parenthesesButton;
-    private Button pasteLeftButton;
-    private Button pasteRightButton;
     private ClipboardManager clipboard;
     private InputMethodManager imm;
     private final TextWatcher eqnTextWatcher = new TextWatcher() {
@@ -149,8 +147,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         balanceButton = (Button) rootView.findViewById(R.id.balance_button);
         plusButton = (Button) rootView.findViewById(R.id.plus_button);
         parenthesesButton = (Button) rootView.findViewById(R.id.parentheses_button);
-        pasteLeftButton = (Button) rootView.findViewById(R.id.left_paste_button);
-        pasteRightButton = (Button) rootView.findViewById(R.id.right_paste_button);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -158,8 +154,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         clearButton.setOnClickListener(this);
         plusButton.setOnClickListener(this);
         parenthesesButton.setOnClickListener(this);
-        pasteLeftButton.setOnClickListener(this);
-        pasteRightButton.setOnClickListener(this);
         pasteEquationButton.setOnClickListener(this);
 
         if (mKeyboardState){
@@ -256,50 +250,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 if (RHSEqn.hasFocus()){
                     RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "()");
                     RHSEqn.setSelection(RHSEqn.getSelectionStart() - 1);
-                }
-                break;
-            case R.id.left_paste_button:
-                if (!(clipboard.hasPrimaryClip())) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain anything!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
-                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain usable text!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                    LHSEqn.setText(item.coerceToText(getActivity()).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
-                    if (LHSEqn.hasFocus()){
-                        LHSEqn.setSelection(LHSEqn.length());
-                    }
-                }
-                break;
-            case R.id.right_paste_button:
-                if (!(clipboard.hasPrimaryClip())) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain anything!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
-                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
-                    if (toast != null){
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getActivity(), "Clipboard doesn't contain usable text!", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                    RHSEqn.setText(item.coerceToText(getActivity()).toString().replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\] ]", ""));
-                    if (RHSEqn.hasFocus()){
-                        RHSEqn.setSelection(RHSEqn.length());
-                    }
                 }
                 break;
             case R.id.equation_paste_button:
