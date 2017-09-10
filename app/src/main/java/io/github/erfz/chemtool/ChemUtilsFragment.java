@@ -39,13 +39,13 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private String mParam1;
     private String mParam2;
     private boolean mKeyboardState;
+    private boolean buttonStateChange;
 
     private Toast toast = null;
     private ConstraintLayout layout;
     private EditText LHSEqn;
     private EditText RHSEqn;
     private Button pasteEquationButton;
-    private Button clearButton;
     private Button balanceButton;
     private Button plusButton;
     private Button parenthesesButton;
@@ -65,12 +65,12 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         @Override
         public void afterTextChanged(Editable s) {
             if (!LHSEqn.getText().toString().isEmpty() || !RHSEqn.getText().toString().isEmpty()){
-                pasteEquationButton.setVisibility(View.GONE);
-                clearButton.setVisibility(View.VISIBLE);
+                pasteEquationButton.setText(R.string.clear_button);
+                buttonStateChange = true;
             }
             else{
-                clearButton.setVisibility(View.GONE);
-                pasteEquationButton.setVisibility(View.VISIBLE);
+                pasteEquationButton.setText(R.string.equation_paste_button);
+                buttonStateChange = false;
             }
 
             for (int i = 0; i < s.length(); ++i){
@@ -143,15 +143,15 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         LHSEqn = (EditText) rootView.findViewById(R.id.left_equation_edittext);
         RHSEqn = (EditText) rootView.findViewById(R.id.right_equation_edittext);
         pasteEquationButton = (Button) rootView.findViewById(R.id.equation_paste_button);
-        clearButton = (Button) rootView.findViewById(R.id.clear_button);
         balanceButton = (Button) rootView.findViewById(R.id.balance_button);
         plusButton = (Button) rootView.findViewById(R.id.plus_button);
         parenthesesButton = (Button) rootView.findViewById(R.id.parentheses_button);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        buttonStateChange=false;
+
         balanceButton.setOnClickListener(this);
-        clearButton.setOnClickListener(this);
         plusButton.setOnClickListener(this);
         parenthesesButton.setOnClickListener(this);
         pasteEquationButton.setOnClickListener(this);
@@ -159,7 +159,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         if (mKeyboardState){
             imm.showSoftInput(getActivity().getCurrentFocus(), InputMethodManager.SHOW_FORCED);
         }
-        clearButton.setVisibility(View.GONE);
         LHSEqn.addTextChangedListener(eqnTextWatcher);
         RHSEqn.addTextChangedListener(eqnTextWatcher);
 
@@ -225,15 +224,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
                 f.show(getFragmentManager(), "equation dialog");
                 break;
-            case R.id.clear_button:
-                LHSEqn.setText("");
-                RHSEqn.setText("");
-                if (toast != null){
-                    toast.cancel();
-                }
-                toast = Toast.makeText(getActivity(), "Equation Cleared", Toast.LENGTH_SHORT);
-                toast.show();
-                break;
             case R.id.plus_button:
                 if (LHSEqn.hasFocus()){
                     LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "+");
@@ -253,6 +243,16 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 }
                 break;
             case R.id.equation_paste_button:
+                if (buttonStateChange){
+                    LHSEqn.setText("");
+                    RHSEqn.setText("");
+                    if (toast != null){
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getActivity(), "Equation Cleared", Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+                }
                 if (!(clipboard.hasPrimaryClip())) {
                     if (toast != null){
                         toast.cancel();

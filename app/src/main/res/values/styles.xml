@@ -14,4 +14,14 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="EquationInput.Button" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">#546e7a</item>
+        <item name="colorControlHighlight">#42000000</item>
+    </style>
+
+    <style name="Balance.Button" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">#d81b60</item>
+        <item name="colorControlHighlight">#42000000</item>
+    </style>
+
 </resources>
