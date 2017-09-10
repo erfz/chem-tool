@@ -2,7 +2,7 @@
     <string name="app_name">ChemTool</string>
     <string name="balance_page_title">Balance</string>
     <string name="constants_equations_page_title">Constants, Equations</string>
-    <string name="equationpaste_button">Paste Eqn</string>
+    <string name="equation_paste_button">Paste Eqn</string>
     <string name="equation_yields_symbol">→</string>
     <string name="balance_button">Balance</string>
     <string name="clear_button">Clear</string>
