@@ -4,7 +4,8 @@ Made by Jason Guo
 - Stoichi. (molecules alone and reaction calculations)
 - Add more drawables
 - Add periodic table
-- Fragment operations
+- Put Balance and Stoichi. widgets in Fragments
+- Side-by-side widget positioning in landscape orientation (need fragments working)
 - Real log calls
 - AppBarLayout
 - Floating labels (?)
