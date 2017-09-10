@@ -45,7 +45,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private ConstraintLayout layout;
     private EditText LHSEqn;
     private EditText RHSEqn;
-    private Button pasteEquationButton;
+    private Button pasteClearButton;
     private Button balanceButton;
     private Button plusButton;
     private Button parenthesesButton;
@@ -65,11 +65,11 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         @Override
         public void afterTextChanged(Editable s) {
             if (!LHSEqn.getText().toString().isEmpty() || !RHSEqn.getText().toString().isEmpty()){
-                pasteEquationButton.setText(R.string.clear_button);
+                pasteClearButton.setText(R.string.clear_button);
                 buttonStateChange = true;
             }
             else{
-                pasteEquationButton.setText(R.string.equation_paste_button);
+                pasteClearButton.setText(R.string.equation_paste_button);
                 buttonStateChange = false;
             }
 
@@ -142,7 +142,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         layout = (ConstraintLayout) rootView.findViewById(R.id.balance_equation_layout);
         LHSEqn = (EditText) rootView.findViewById(R.id.left_equation_edittext);
         RHSEqn = (EditText) rootView.findViewById(R.id.right_equation_edittext);
-        pasteEquationButton = (Button) rootView.findViewById(R.id.equation_paste_button);
+        pasteClearButton = (Button) rootView.findViewById(R.id.paste_clear_button);
         balanceButton = (Button) rootView.findViewById(R.id.balance_button);
         plusButton = (Button) rootView.findViewById(R.id.plus_button);
         parenthesesButton = (Button) rootView.findViewById(R.id.parentheses_button);
@@ -154,7 +154,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         balanceButton.setOnClickListener(this);
         plusButton.setOnClickListener(this);
         parenthesesButton.setOnClickListener(this);
-        pasteEquationButton.setOnClickListener(this);
+        pasteClearButton.setOnClickListener(this);
 
         if (mKeyboardState){
             imm.showSoftInput(getActivity().getCurrentFocus(), InputMethodManager.SHOW_FORCED);
@@ -242,7 +242,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     RHSEqn.setSelection(RHSEqn.getSelectionStart() - 1);
                 }
                 break;
-            case R.id.equation_paste_button:
+            case R.id.paste_clear_button:
                 if (buttonStateChange){
                     LHSEqn.setText("");
                     RHSEqn.setText("");

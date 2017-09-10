@@ -14,7 +14,7 @@
 
         <Button style="@style/Base.Widget.AppCompat.Button.Colored"
             android:theme="@style/EquationInput.Button"
-            android:id="@+id/equation_paste_button"
+            android:id="@+id/paste_clear_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
