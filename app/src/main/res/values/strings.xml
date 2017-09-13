@@ -6,8 +6,8 @@
     <string name="equation_yields_symbol">→</string>
     <string name="balance_button">Balance</string>
     <string name="clear_button">Clear</string>
-    <string name="LHSEqnHint">Ba3N2 + H2O</string>
-    <string name="RHSEqnHint">Ba(OH)2 + NH3</string>
+    <string name="LHSEqnHint">Reactants</string>
+    <string name="RHSEqnHint">Products</string>
     <string name="copy_button">Copy</string>
     <string name="constants_header">Constants</string>
     <string name="potentials_header">Reduction Potentials</string>
