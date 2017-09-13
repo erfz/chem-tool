@@ -11,4 +11,9 @@
     <string name="copy_button">Copy</string>
     <string name="constants_header">Constants</string>
     <string name="potentials_header">Reduction Potentials</string>
+    <string name="snackbar_invalid_equation">Invalid Equation!</string>
+    <string name="snackbar_equation_cleared">Equation Cleared</string>
+    <string name="snackbar_clipboard_no_text">Clipboard doesn\'t contain anything!</string>
+    <string name="snackbar_clipboard_no_parseable_text">Clipboard doesn\'t contain usable text!</string>
+    <string name="snackbar_undo_clear">Undo</string>
 </resources>
