@@ -47,8 +47,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private EditText RHSEqn;
     private Button pasteClearButton;
     private Button balanceButton;
-    private Button plusButton;
-    private Button parenthesesButton;
     private ClipboardManager clipboard;
     private InputMethodManager imm;
     private final TextWatcher eqnTextWatcher = new TextWatcher() {
@@ -144,16 +142,12 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         RHSEqn = (EditText) rootView.findViewById(R.id.right_equation_edittext);
         pasteClearButton = (Button) rootView.findViewById(R.id.paste_clear_button);
         balanceButton = (Button) rootView.findViewById(R.id.balance_button);
-        plusButton = (Button) rootView.findViewById(R.id.plus_button);
-        parenthesesButton = (Button) rootView.findViewById(R.id.parentheses_button);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         buttonStateChange=false;
 
         balanceButton.setOnClickListener(this);
-        plusButton.setOnClickListener(this);
-        parenthesesButton.setOnClickListener(this);
         pasteClearButton.setOnClickListener(this);
 
         if (mKeyboardState){
@@ -223,24 +217,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 }
                 EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
                 f.show(getFragmentManager(), "equation dialog");
-                break;
-            case R.id.plus_button:
-                if (LHSEqn.hasFocus()){
-                    LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "+");
-                }
-                if (RHSEqn.hasFocus()){
-                    RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "+");
-                }
-                break;
-            case R.id.parentheses_button:
-                if (LHSEqn.hasFocus()){
-                    LHSEqn.getText().insert(LHSEqn.getSelectionStart(), "()");
-                    LHSEqn.setSelection(LHSEqn.getSelectionStart() - 1);
-                }
-                if (RHSEqn.hasFocus()){
-                    RHSEqn.getText().insert(RHSEqn.getSelectionStart(), "()");
-                    RHSEqn.setSelection(RHSEqn.getSelectionStart() - 1);
-                }
                 break;
             case R.id.paste_clear_button:
                 if (buttonStateChange){

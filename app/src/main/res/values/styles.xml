@@ -20,7 +20,7 @@
     </style>
 
     <style name="Balance.Button" parent="ThemeOverlay.AppCompat">
-        <item name="colorAccent">#d81b60</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">#42000000</item>
     </style>
 

@@ -2,15 +2,13 @@
     <string name="app_name">ChemTool</string>
     <string name="balance_page_title">Balance</string>
     <string name="constants_equations_page_title">Constants, Equations</string>
-    <string name="equation_paste_button">Paste Eqn</string>
+    <string name="equation_paste_button">Paste Equation</string>
     <string name="equation_yields_symbol">→</string>
     <string name="balance_button">Balance</string>
     <string name="clear_button">Clear</string>
     <string name="LHSEqnHint">Ba3N2 + H2O</string>
     <string name="RHSEqnHint">Ba(OH)2 + NH3</string>
     <string name="copy_button">Copy</string>
-    <string name="plus_button">+</string>
-    <string name="parentheses_button">( )</string>
     <string name="constants_header">Constants</string>
     <string name="potentials_header">Reduction Potentials</string>
 </resources>
