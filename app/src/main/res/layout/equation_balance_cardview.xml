@@ -24,7 +24,6 @@
             android:layout_marginTop="16dp"
             android:text="@string/equation_paste_button"
             android:theme="@style/EquationInput.Button"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/right_equation_hint_layout" />
@@ -93,8 +92,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/paste_clear_button"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/paste_clear_button" />
 
         <android.support.constraint.Guideline
             android:id="@+id/vertical_guideline"
