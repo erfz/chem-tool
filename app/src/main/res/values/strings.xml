@@ -16,4 +16,5 @@
     <string name="snackbar_clipboard_no_text">Clipboard doesn\'t contain anything!</string>
     <string name="snackbar_clipboard_no_parseable_text">Clipboard doesn\'t contain usable text!</string>
     <string name="snackbar_undo_clear">Undo</string>
+    <string name="snackbar_equation_copied">Equation Copied</string>
 </resources>

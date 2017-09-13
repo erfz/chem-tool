@@ -6,13 +6,13 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by tensor on 8/14/2017.
@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 public class EquationDialogFragment extends DialogFragment {
     private String mEquation;
-    private Toast toast = null;
 
     public static EquationDialogFragment newInstance(String equation) {
         EquationDialogFragment fragment = new EquationDialogFragment();
@@ -54,11 +53,7 @@ public class EquationDialogFragment extends DialogFragment {
                         .getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("equation", mEquation);
                 clipboard.setPrimaryClip(clip);
-                if (toast != null){
-                    toast.cancel();
-                }
-                toast = Toast.makeText(getActivity(), "Equation Copied", Toast.LENGTH_SHORT);
-                toast.show();
+                Snackbar.make(getActivity().findViewById(R.id.coordinatorLayout), R.string.snackbar_equation_copied, Snackbar.LENGTH_SHORT).show();
             }
         });
 
