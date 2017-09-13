@@ -72,6 +72,13 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 buttonStateChange = false;
             }
 
+            if (!LHSEqn.getText().toString().replaceAll("\\s+","").isEmpty()
+                    && !RHSEqn.getText().toString().replaceAll("\\s+","").isEmpty()) {
+                balanceButton.setEnabled(true);
+            } else {
+                balanceButton.setEnabled(false);
+            }
+
             for (int i = 0; i < s.length(); ++i) {
                 if (i == 0 && Character.isLowerCase(s.charAt(i))) {
                     String str = s.subSequence(i, i + 1).toString().toUpperCase();
@@ -150,6 +157,8 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
 
         balanceButton.setOnClickListener(this);
         pasteClearButton.setOnClickListener(this);
+
+        balanceButton.setEnabled(false);
 
         if (mKeyboardState) {
             imm.showSoftInput(getActivity().getCurrentFocus(), InputMethodManager.SHOW_FORCED);
