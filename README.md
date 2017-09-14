@@ -1,6 +1,8 @@
 # ChemTool
 Made by Jason Guo
 # To-do
+- Test parseDot()
+- CoerceToText when pasting thru context menu
 - Stoichi. (molecules alone and reaction calculations)
 - Add more drawables
 - Add periodic table
@@ -8,5 +10,4 @@ Made by Jason Guo
 - Side-by-side widget positioning in landscape orientation (need fragments working)
 - Real log calls
 - AppBarLayout
-- Floating labels (?)
 - Fix icon
