@@ -247,7 +247,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                             .replaceAll("→+", "=").replaceAll("←+", "=")
                             .replaceAll("↔+", "=").replaceAll("⇄+", "=")
                             .replaceAll("⇌+", "=");
-                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=]", "");
+                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=].•⋅", "");
                     equation = equation.replaceAll("=+", "=");
                     String[] eqnHS = equation.split("=");
                     if (eqnHS.length != 2) {

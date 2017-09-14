@@ -30,21 +30,22 @@ class EquationBalance { // put everything into a neat class
         for (int i = 0; i < eqnHS.length; ++i){
             eqnHS[i] = eqnHS[i].replaceAll("\\[", "\\(");
             eqnHS[i] = eqnHS[i].replaceAll("\\]", "\\)");
+            eqnHS[i] = eqnHS[i].replaceAll("\\.|•", "⋅");
         }
 
         for (int i = 0; i < eqnLHSplit.length; ++i){
-            eqnLHSplit[i] = removeParenthesesAndBrackets(eqnLHSplit[i]);
+            eqnLHSplit[i] = parseFormula(eqnLHSplit[i]);
         }
 
         for (int i = 0; i < eqnRHSplit.length; ++i){
-            eqnRHSplit[i] = removeParenthesesAndBrackets(eqnRHSplit[i]);
+            eqnRHSplit[i] = parseFormula(eqnRHSplit[i]);
         }
 
         String[] eqnLHEle = null;
         String[] eqnRHEle = null;
         {
-            String[] tempLHEle = eqnHS[0].replaceAll("(\\+|\\d|\\(|\\))", "").split("(?=\\p{Upper})");
-            String[] tempRHEle = eqnHS[1].replaceAll("(\\+|\\d|\\(|\\))", "").split("(?=\\p{Upper})");
+            String[] tempLHEle = eqnHS[0].replaceAll("(\\+|\\d|\\(|\\)|⋅)", "").split("(?=\\p{Upper})");
+            String[] tempRHEle = eqnHS[1].replaceAll("(\\+|\\d|\\(|\\)|⋅)", "").split("(?=\\p{Upper})");
 
             int LHElecount = 0;
             int RHElecount = 0;
@@ -360,7 +361,34 @@ class EquationBalance { // put everything into a neat class
         }
     }
 
-    static String removeParenthesesAndBrackets(String formula){
+    static String parseFormula(String formula){
+        formula = parseParenthesesAndBrackets(
+                parseDot(formula));
+        return formula;
+    }
+
+    private static String parseDot(String formula){
+        formula = formula.replaceAll("\\.|•", "⋅");
+        if (formula.contains("⋅")){
+            int index = formula.indexOf("⋅");
+            int multiple = 0;
+            String str = formula.substring(index + 1);
+            formula = formula.substring(0, index) + "(";
+            if (str.replaceAll("\\p{Alpha}.*", "").isEmpty()){
+                multiple = 1;
+                str = str + ")" + multiple;
+            }
+            else{
+                multiple = Integer.parseInt(str.replaceAll("\\p{Alpha}.*", ""));
+                str = str.substring(String.valueOf(multiple).length()) + ")" + multiple;
+            }
+            formula += str;
+            System.out.println(formula + "!!!!");
+        }
+        return formula;
+    }
+
+    private static String parseParenthesesAndBrackets(String formula){
         formula = formula.replaceAll("\\[", "\\(");
         formula = formula.replaceAll("\\]", "\\)");
         if (formula.contains("(") && formula.contains(")")){

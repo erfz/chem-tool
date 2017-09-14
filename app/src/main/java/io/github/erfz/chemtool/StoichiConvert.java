@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 
 class StoichiConvert {
-    private static final HashMap<String, Double> map = new HashMap<String, Double>();
+    private static final HashMap<String, Double> map = new HashMap<>();
     static{
         map.put("H", 1.008);
         map.put("He", 4.0026);
@@ -140,7 +140,7 @@ class StoichiConvert {
     private static double getFormulaMass(String formula){
         double totalMass = 0;
         formula = formula.replaceAll("^\\d+",""); // must first nuke leading coeff. so that paren/brckt removal is correct
-        formula = EquationBalance.removeParenthesesAndBrackets(formula);
+        formula = EquationBalance.parseFormula(formula);
         String[] formulaArray = formula.split("(?=\\p{Upper})");
 
         for (String str : formulaArray){
