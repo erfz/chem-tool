@@ -45,7 +45,7 @@
                 android:id="@+id/left_equation_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅ "
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅· "
                 android:hint="@string/LHSEqnHint"
                 android:imeOptions="actionNext"
                 android:inputType="textNoSuggestions|textVisiblePassword"
@@ -70,7 +70,7 @@
                 android:id="@+id/right_equation_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅ "
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅· "
                 android:hint="@string/RHSEqnHint"
                 android:inputType="textNoSuggestions|textVisiblePassword"
                 android:singleLine="true" />

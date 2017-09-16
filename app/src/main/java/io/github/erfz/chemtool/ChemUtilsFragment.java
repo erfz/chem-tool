@@ -84,9 +84,11 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     String str = s.subSequence(i, i + 1).toString().toUpperCase();
                     s.replace(i, i + 1, str);
                 } else if (i > 0) {
-                    if (Character.isLowerCase(s.charAt(i)) && (s.charAt(i - 1) == '(' || s.charAt(i - 1) == ')' || s.charAt(i - 1) == ' '
-                            || s.charAt(i - 1) == '+' || Character.isLowerCase(s.charAt(i - 1))
-                            || Character.isDigit(s.charAt(i - 1)))) {
+                    if (Character.isLowerCase(s.charAt(i)) && (s.charAt(i - 1) == '(' || s.charAt(i - 1) == ')'
+                            || s.charAt(i - 1) == '[' || s.charAt(i - 1) == ']' || s.charAt(i - 1) == '.'
+                            || s.charAt(i - 1) == '•' || s.charAt(i - 1) == '⋅' || s.charAt(i - 1) == '·'
+                            || s.charAt(i - 1) == ' ' || s.charAt(i - 1) == '+'
+                            || Character.isLowerCase(s.charAt(i - 1)) || Character.isDigit(s.charAt(i - 1)))) {
                         String str = s.subSequence(i, i + 1).toString().toUpperCase();
                         s.replace(i, i + 1, str);
                     }
@@ -247,7 +249,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                             .replaceAll("→+", "=").replaceAll("←+", "=")
                             .replaceAll("↔+", "=").replaceAll("⇄+", "=")
                             .replaceAll("⇌+", "=");
-                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=].•⋅", "");
+                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=].•⋅·", "");
                     equation = equation.replaceAll("=+", "=");
                     String[] eqnHS = equation.split("=");
                     if (eqnHS.length != 2) {

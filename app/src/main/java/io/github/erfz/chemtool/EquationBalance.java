@@ -30,7 +30,7 @@ class EquationBalance { // put everything into a neat class
         for (int i = 0; i < eqnHS.length; ++i){
             eqnHS[i] = eqnHS[i].replaceAll("\\[", "\\(");
             eqnHS[i] = eqnHS[i].replaceAll("\\]", "\\)");
-            eqnHS[i] = eqnHS[i].replaceAll("\\.|•", "⋅");
+            eqnHS[i] = eqnHS[i].replaceAll("\\.|•|·", "⋅");
         }
 
         for (int i = 0; i < eqnLHSplit.length; ++i){
@@ -368,7 +368,7 @@ class EquationBalance { // put everything into a neat class
     }
 
     private static String parseDot(String formula){
-        formula = formula.replaceAll("\\.|•", "⋅");
+        formula = formula.replaceAll("\\.|•|·", "⋅");
         if (formula.contains("⋅")){
             int index = formula.indexOf("⋅");
             int multiple = 0;
