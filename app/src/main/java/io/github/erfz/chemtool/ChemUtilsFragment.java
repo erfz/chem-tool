@@ -249,15 +249,15 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                             .replaceAll("→+", "=").replaceAll("←+", "=")
                             .replaceAll("↔+", "=").replaceAll("⇄+", "=")
                             .replaceAll("⇌+", "=");
-                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=].•⋅·", "");
+                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=.•⋅· ]", "");
                     equation = equation.replaceAll("=+", "=");
                     String[] eqnHS = equation.split("=");
                     if (eqnHS.length != 2) {
                         Snackbar.make(coordinatorLayout, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
                         return;
                     }
-                    LHSEqn.setText(eqnHS[0]);
-                    RHSEqn.setText(eqnHS[1]);
+                    LHSEqn.setText(eqnHS[0].trim());
+                    RHSEqn.setText(eqnHS[1].trim());
                     LHSEqn.setSelection(LHSEqn.length());
                     RHSEqn.setSelection(RHSEqn.length());
                 }
