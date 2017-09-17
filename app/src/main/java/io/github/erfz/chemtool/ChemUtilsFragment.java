@@ -245,12 +245,9 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 } else {
                     ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
                     equation = item.coerceToText(getActivity()).toString();
-                    equation = equation.replaceAll("-+", "=").replaceAll("<+", "=").replaceAll(">+", "=")
-                            .replaceAll("→+", "=").replaceAll("←+", "=")
-                            .replaceAll("↔+", "=").replaceAll("⇄+", "=")
-                            .replaceAll("⇌+", "=");
-                    equation = equation.replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=.•⋅· ]", "");
-                    equation = equation.replaceAll("=+", "=");
+                    equation = equation.replaceAll("-+|<+|>+|→+|←+|↔+|⇄+|⇌+", "=")
+                            .replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=.•⋅· ]", "")
+                            .replaceAll("=+", "=");
                     String[] eqnHS = equation.split("=");
                     if (eqnHS.length != 2) {
                         Snackbar.make(coordinatorLayout, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
