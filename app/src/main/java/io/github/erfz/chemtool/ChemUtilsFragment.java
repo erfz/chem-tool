@@ -77,8 +77,8 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 buttonStateChange = false;
             }
 
-            if (!LHSEqn.getText().toString().replaceAll("\\s+","").isEmpty()
-                    && !RHSEqn.getText().toString().replaceAll("\\s+","").isEmpty()) {
+            if (!LHSEqn.getText().toString().replaceAll("\\s+", "").isEmpty()
+                    && !RHSEqn.getText().toString().replaceAll("\\s+", "").isEmpty()) {
                 balanceButton.setEnabled(true);
             } else {
                 balanceButton.setEnabled(false);
@@ -347,7 +347,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
 
         @Override
         protected void onPostExecute(String equation) {
-            if (equation == null){
+            if (equation == null) {
                 Snackbar.make(coordinatorLayout, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
                 return;
             }
