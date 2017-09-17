@@ -1,9 +1,8 @@
 # ChemTool
 Made by Jason Guo
 # To-do
-- Test parseDot()
 - Cleanup Balance function class
-- CoerceToText when pasting thru context menu
+- Override ContextMenu paste()
 - Stoichi. (molecules alone and reaction calculations)
 - Add more drawables
 - Add periodic table
