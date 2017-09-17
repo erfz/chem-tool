@@ -1,14 +1,17 @@
 package io.github.erfz.chemtool;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -283,5 +287,58 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public static class EquationDialogFragment extends DialogFragment {
+        private String mEquation;
+
+        public static EquationDialogFragment newInstance(String equation) {
+            EquationDialogFragment fragment = new EquationDialogFragment();
+            Bundle args = new Bundle();
+            args.putString("equation", equation);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            mEquation = getArguments().getString("equation");
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.dialog_fragment_equation, container, false);
+
+            TextView equationtv = (TextView) v.findViewById(R.id.balanced_equation);
+            equationtv.setText(mEquation);
+            equationtv.setTextIsSelectable(true);
+            equationtv.setTextColor(Color.BLACK);
+
+            Button copyButton = (Button) v.findViewById(R.id.copy_button);
+            copyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ClipboardManager clipboard = (ClipboardManager) getActivity()
+                            .getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("equation", mEquation);
+                    clipboard.setPrimaryClip(clip);
+                    Snackbar.make(getActivity().findViewById(R.id.coordinatorLayout), R.string.snackbar_equation_copied, Snackbar.LENGTH_SHORT).show();
+                }
+            });
+
+            return v;
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+
+            Dialog dialog = getDialog();
+            if (dialog != null) {
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+        }
     }
 }
