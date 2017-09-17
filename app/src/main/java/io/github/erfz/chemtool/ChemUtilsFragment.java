@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -218,17 +219,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         switch (id) {
             case R.id.balance_button:
                 equation = LHSEqn.getText().toString() + "=" + RHSEqn.getText().toString();
-                try {
-                    equation = EquationBalance.balanceEquation(equation);
-                } catch (Exception e) {
-                    Snackbar.make(coordinatorLayout, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
-                if (getActivity().getCurrentFocus() != null) {
-                    getActivity().getCurrentFocus().clearFocus();
-                }
-                EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
-                f.show(getFragmentManager(), "equation dialog");
+                new BalanceEquationTask().execute(equation);
                 break;
             case R.id.paste_clear_button:
                 if (buttonStateChange) {
@@ -339,6 +330,32 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
             if (dialog != null) {
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             }
+        }
+    }
+
+    private class BalanceEquationTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String equation = strings[0];
+            try {
+                equation = EquationBalance.balanceEquation(equation);
+            } catch (Exception e) {
+                return null;
+            }
+            return equation;
+        }
+
+        @Override
+        protected void onPostExecute(String equation) {
+            if (equation == null){
+                Snackbar.make(coordinatorLayout, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+            if (getActivity().getCurrentFocus() != null) {
+                getActivity().getCurrentFocus().clearFocus();
+            }
+            EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
+            f.show(getFragmentManager(), "equation dialog");
         }
     }
 }
