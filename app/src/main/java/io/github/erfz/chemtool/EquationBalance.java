@@ -1,5 +1,7 @@
 package io.github.erfz.chemtool;
 
+import java.util.Arrays;
+
 /**
  * Created by riesz on 8/19/2016.
  */
@@ -381,21 +383,22 @@ class EquationBalance { // put everything into a neat class
             int multiple = 0;
             String beforeDot = formula.substring(0, index) + "(";
             String afterDot = formula.substring(index + 1);
-            String afterDotNumericOrEmpty = afterDot.replaceAll("\\p{Alpha}.*", "");
+            String afterDotNumericOrEmpty = afterDot.replaceAll("(\\(|\\p{Alpha}).*", "");
             int multipleLength = 0;
             int contAlphaNumLength = 0;
             if (afterDotNumericOrEmpty.isEmpty()) {
                 multiple = 1;
                 multipleLength = 0;
-                contAlphaNumLength = countContinuousAlphaNum(afterDot, multipleLength);
+                contAlphaNumLength = countContinuousAlphaNumParen(afterDot, multipleLength);
             } else {
                 multiple = Integer.parseInt(afterDotNumericOrEmpty);
                 multipleLength = String.valueOf(multiple).length();
-                contAlphaNumLength = countContinuousAlphaNum(afterDot, multipleLength);
+                contAlphaNumLength = countContinuousAlphaNumParen(afterDot, multipleLength);
             }
             afterDot = afterDot.substring(multipleLength, multipleLength + contAlphaNumLength)
-                    + ")" + +multiple + afterDot.substring(multipleLength + contAlphaNumLength);
+                    + ")" + multiple + afterDot.substring(multipleLength + contAlphaNumLength);
             formula = beforeDot + afterDot;
+            System.out.println(formula);
         }
         return formula;
     }
@@ -403,6 +406,7 @@ class EquationBalance { // put everything into a neat class
     private static String parseParenthesesAndBrackets(String formula) {
         while (formula.contains("(") && formula.contains(")")) {
             String[] splitParts = splitByInnerParentheses(formula);
+            System.out.println(Arrays.toString(splitParts));
 
             int parenNumber = 0;
             if (splitParts[2].replaceAll("(\\)|\\p{Alpha}).*", "").isEmpty()) parenNumber = 1;
@@ -469,16 +473,20 @@ class EquationBalance { // put everything into a neat class
         return splitParts;
     }
 
-    private static int countContinuousAlphaNum(String str, int index) {
+    private static int countContinuousAlphaNumParen(String str, int index) {
         int count = 0;
+        int parenthesesCount = 0;
         for (int i = index; i < str.length(); ++i) {
             char x = str.charAt(i);
             if (Character.isDigit(x) || Character.isLetter(x)) {
                 ++count;
+            } else if (x == '(') {
+                ++parenthesesCount;
             } else {
                 break;
             }
         }
+        count += parenthesesCount;
         return count;
     }
 
