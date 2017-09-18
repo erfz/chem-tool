@@ -339,6 +339,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
             try {
                 equation = EquationBalance.balanceEquation(equation);
             } catch (Exception e) {
+                e.printStackTrace();
                 return null;
             }
             return equation;

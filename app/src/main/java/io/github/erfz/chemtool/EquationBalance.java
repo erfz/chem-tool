@@ -78,12 +78,12 @@ class EquationBalance { // put everything into a neat class
                 }
             }
 
-            System.out.println(Arrays.toString(tempLHEle) + "\n" + Arrays.toString(tempRHEle));
+//            System.out.println(Arrays.toString(tempLHEle) + "\n" + Arrays.toString(tempRHEle));
         }
 
-        System.out.println(eqnHS[0] + "\n" + eqnHS[1]);
-        System.out.println(Arrays.toString(eqnLHSplit) + " " + eqnLHSplit.length + "\n" + Arrays.toString(eqnRHSplit) + " " + eqnRHSplit.length);
-        System.out.println(Arrays.toString(eqnLHEle) + " " + eqnLHEle.length + "\n" + Arrays.toString(eqnRHEle) + " " +eqnRHEle.length);
+//        System.out.println(eqnHS[0] + "\n" + eqnHS[1]);
+//        System.out.println(Arrays.toString(eqnLHSplit) + " " + eqnLHSplit.length + "\n" + Arrays.toString(eqnRHSplit) + " " + eqnRHSplit.length);
+//        System.out.println(Arrays.toString(eqnLHEle) + " " + eqnLHEle.length + "\n" + Arrays.toString(eqnRHEle) + " " +eqnRHEle.length);
 
         int numElements = 0;
         { // find actual # of elements
@@ -383,7 +383,7 @@ class EquationBalance { // put everything into a neat class
                 str = str.substring(String.valueOf(multiple).length()) + ")" + multiple;
             }
             formula += str;
-            System.out.println(formula + "!!!!");
+//            System.out.println(formula + "!!!!");
         }
         return formula;
     }
@@ -391,15 +391,23 @@ class EquationBalance { // put everything into a neat class
     private static String parseParenthesesAndBrackets(String formula){
         formula = formula.replaceAll("\\[", "\\(");
         formula = formula.replaceAll("\\]", "\\)");
-        if (formula.contains("(") && formula.contains(")")){
-            String[] splitParts = formula.split("(\\(+|\\)+)");
-            System.out.println(Arrays.toString(splitParts));
-            for (int j = 0; j < splitParts.length - 1; ++j){
+        while (formula.contains("(") && formula.contains(")")){
+            int beginParenthesesIndex = formula.indexOf("(");
+            while (formula.indexOf("(", beginParenthesesIndex + 1) != -1){
+                beginParenthesesIndex = formula.indexOf("(", beginParenthesesIndex + 1);
+            }
+            int endParenthesesIndex = formula.indexOf(")", beginParenthesesIndex);
+            String[] splitParts = new String[3];
+            splitParts[0] = formula.substring(0, beginParenthesesIndex);
+            splitParts[1] = formula.substring(beginParenthesesIndex, endParenthesesIndex + 1).replaceAll("\\(+|\\)+", "");;
+            splitParts[2] = formula.substring(endParenthesesIndex + 1, formula.length());
+            System.out.println(splitParts[0] + "\n" + splitParts[1] + "\n" + splitParts[2]);
+            for (int j = 1; j < splitParts.length; ++j){
                 if (formula.contains("(" + splitParts[j] + ")")){
                     String compoundString = "";
                     int parenNumber = 0;
                     if (splitParts[j + 1].replaceAll("\\p{Alpha}.*", "").isEmpty()) parenNumber = 1;
-                    else parenNumber = Integer.parseInt(splitParts[j + 1].replaceAll("\\p{Alpha}.*", ""));
+                    else parenNumber = Integer.parseInt(splitParts[j + 1].replaceAll("(\\)|\\p{Alpha}).*", ""));
                     String[] compoundElements = null;
                     {
                         String[] tempCompoundElements = splitParts[j].split("(?=\\p{Upper})");
@@ -419,6 +427,7 @@ class EquationBalance { // put everything into a neat class
             String finalString = "";
             for (String part : splitParts) finalString = finalString.concat(part);
             formula = finalString;
+            System.out.println(formula);
         }
         return formula;
     }
