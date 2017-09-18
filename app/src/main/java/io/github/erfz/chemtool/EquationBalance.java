@@ -486,7 +486,7 @@ class EquationBalance { // put everything into a neat class
                 break;
             }
         }
-        count += parenthesesCount;
+        count += 2*parenthesesCount;
         return count;
     }
 
