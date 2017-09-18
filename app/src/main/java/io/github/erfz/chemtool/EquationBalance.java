@@ -78,12 +78,8 @@ class EquationBalance { // put everything into a neat class
                 }
             }
 
-//            System.out.println(Arrays.toString(tempLHEle) + "\n" + Arrays.toString(tempRHEle));
         }
 
-//        System.out.println(eqnHS[0] + "\n" + eqnHS[1]);
-//        System.out.println(Arrays.toString(eqnLHSplit) + " " + eqnLHSplit.length + "\n" + Arrays.toString(eqnRHSplit) + " " + eqnRHSplit.length);
-//        System.out.println(Arrays.toString(eqnLHEle) + " " + eqnLHEle.length + "\n" + Arrays.toString(eqnRHEle) + " " +eqnRHEle.length);
 
         int numElements = 0;
         { // find actual # of elements
@@ -276,7 +272,8 @@ class EquationBalance { // put everything into a neat class
                     if (!(Math.abs(doubleCoeffs[i] - Math.round(doubleCoeffs[i])) < 0.0001)){
                         {
                             double smallestDecVal = Double.MAX_VALUE;
-                            for (int k = 0; k < numMolecules; ++k) if (doubleCoeffs[k] < smallestDecVal && !(Math.abs(doubleCoeffs[k] - Math.round(doubleCoeffs[k])) < 0.0001)) smallestDecVal = doubleCoeffs[k];
+                            for (int k = 0; k < numMolecules; ++k) if (doubleCoeffs[k] < smallestDecVal &&
+                                    !(Math.abs(doubleCoeffs[k] - Math.round(doubleCoeffs[k])) < 0.0001)) smallestDecVal = doubleCoeffs[k];
                             smallestDecFracPart = smallestDecVal % 1;
                         }
                         for (int j = 0; j < numMolecules; ++j) doubleCoeffs[j] /= smallestDecFracPart;
@@ -383,7 +380,6 @@ class EquationBalance { // put everything into a neat class
                 str = str.substring(String.valueOf(multiple).length()) + ")" + multiple;
             }
             formula += str;
-//            System.out.println(formula + "!!!!");
         }
         return formula;
     }
@@ -401,33 +397,41 @@ class EquationBalance { // put everything into a neat class
             splitParts[0] = formula.substring(0, beginParenthesesIndex);
             splitParts[1] = formula.substring(beginParenthesesIndex, endParenthesesIndex + 1).replaceAll("\\(+|\\)+", "");;
             splitParts[2] = formula.substring(endParenthesesIndex + 1, formula.length());
-            System.out.println(splitParts[0] + "\n" + splitParts[1] + "\n" + splitParts[2]);
-            for (int j = 1; j < splitParts.length; ++j){
-                if (formula.contains("(" + splitParts[j] + ")")){
-                    String compoundString = "";
-                    int parenNumber = 0;
-                    if (splitParts[j + 1].replaceAll("\\p{Alpha}.*", "").isEmpty()) parenNumber = 1;
-                    else parenNumber = Integer.parseInt(splitParts[j + 1].replaceAll("(\\)|\\p{Alpha}).*", ""));
-                    String[] compoundElements = null;
-                    {
-                        String[] tempCompoundElements = splitParts[j].split("(?=\\p{Upper})");
-                        compoundElements = new String[tempCompoundElements.length - 1];
-                        System.arraycopy(tempCompoundElements, 1, compoundElements, 0, compoundElements.length);
+
+            String compoundString = "";
+            int parenNumber = 0;
+            if (splitParts[2].replaceAll("(\\)|\\p{Alpha}).*", "").isEmpty()) parenNumber = 1;
+            else parenNumber = Integer.parseInt(splitParts[2].replaceAll("(\\)|\\p{Alpha}).*", ""));
+            String[] compoundElements = null;
+            {
+                String[] tempCompoundElements = splitParts[1].split("(?=\\p{Upper})");
+                int count = 0;
+                for (String str : tempCompoundElements){
+                    if (!str.isEmpty()){
+                        ++count;
                     }
-                    int[] elementNumber = new int[compoundElements.length];
-                    for (int k = 0; k < elementNumber.length; ++k){
-                        if (compoundElements[k].replaceAll("\\p{Alpha}", "").isEmpty()) elementNumber[k] = parenNumber;
-                        else elementNumber[k] = Integer.parseInt(compoundElements[k].replaceAll("\\p{Alpha}", "")) * parenNumber;
-                        compoundString = compoundString.concat(compoundElements[k].replaceAll("\\d*", "").concat(Integer.toString(elementNumber[k])));
+                }
+                compoundElements = new String[count];
+
+                int arrayFillIndex = 0;
+                for (String str : tempCompoundElements){
+                    if (!str.isEmpty()){
+                        compoundElements[arrayFillIndex] = str;
+                        ++arrayFillIndex;
                     }
-                    splitParts[j] = compoundString;
-                    splitParts[j + 1] = splitParts[j + 1].replaceAll("^\\d*", "");
                 }
             }
+            int[] elementNumber = new int[compoundElements.length];
+            for (int k = 0; k < elementNumber.length; ++k){
+                if (compoundElements[k].replaceAll("\\p{Alpha}", "").isEmpty()) elementNumber[k] = parenNumber;
+                else elementNumber[k] = Integer.parseInt(compoundElements[k].replaceAll("\\p{Alpha}", "")) * parenNumber;
+                compoundString = compoundString.concat(compoundElements[k].replaceAll("\\d*", "").concat(Integer.toString(elementNumber[k])));
+            }
+            splitParts[1] = compoundString;
+            splitParts[2] = splitParts[2].replaceAll("^\\d*", "");
             String finalString = "";
             for (String part : splitParts) finalString = finalString.concat(part);
             formula = finalString;
-            System.out.println(formula);
         }
         return formula;
     }
