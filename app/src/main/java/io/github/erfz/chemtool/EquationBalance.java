@@ -1,7 +1,5 @@
 package io.github.erfz.chemtool;
 
-import java.util.Arrays;
-
 /**
  * Created by riesz on 8/19/2016.
  */
@@ -27,11 +25,7 @@ class EquationBalance { // put everything into a neat class
         System.arraycopy(eqnLHSplit, 0, lhsPrintArray, 0, lhsPrintArray.length);
         System.arraycopy(eqnRHSplit, 0, rhsPrintArray, 0, rhsPrintArray.length);
 
-        for (int i = 0; i < eqnHS.length; ++i){
-            eqnHS[i] = eqnHS[i].replaceAll("\\[", "\\(");
-            eqnHS[i] = eqnHS[i].replaceAll("\\]", "\\)");
-            eqnHS[i] = eqnHS[i].replaceAll("\\.|•|·", "⋅");
-        }
+        doSubstitutions(eqnHS, eqnLHSplit, eqnRHSplit);
 
         for (int i = 0; i < eqnLHSplit.length; ++i){
             eqnLHSplit[i] = parseFormula(eqnLHSplit[i]);
@@ -365,43 +359,39 @@ class EquationBalance { // put everything into a neat class
     }
 
     private static String parseDot(String formula){
-        formula = formula.replaceAll("\\.|•|·", "⋅");
         if (formula.contains("⋅")){
             int index = formula.indexOf("⋅");
             int multiple = 0;
-            String str = formula.substring(index + 1);
-            formula = formula.substring(0, index) + "(";
-            if (str.replaceAll("\\p{Alpha}.*", "").isEmpty()){
+            String beforeDot = formula.substring(0, index) + "(";
+            String afterDot = formula.substring(index + 1);
+            String afterDotNumericOrEmpty = afterDot.replaceAll("\\p{Alpha}.*", "");
+            int multipleLength = 0;
+            int contAlphaNumLength = 0;
+            if (afterDotNumericOrEmpty.isEmpty()){
                 multiple = 1;
-                str = str + ")" + multiple;
+                multipleLength = 0;
+                contAlphaNumLength = countContinuousAlphaNum(afterDot, multipleLength);
             }
             else{
-                multiple = Integer.parseInt(str.replaceAll("\\p{Alpha}.*", ""));
-                str = str.substring(String.valueOf(multiple).length()) + ")" + multiple;
+                multiple = Integer.parseInt(afterDotNumericOrEmpty);
+                multipleLength = String.valueOf(multiple).length();
+                contAlphaNumLength = countContinuousAlphaNum(afterDot, multipleLength);
             }
-            formula += str;
+            afterDot = afterDot.substring(multipleLength, multipleLength + contAlphaNumLength)
+                    + ")" + + multiple + afterDot.substring(multipleLength + contAlphaNumLength);
+            formula = beforeDot + afterDot;
         }
         return formula;
     }
 
     private static String parseParenthesesAndBrackets(String formula){
-        formula = formula.replaceAll("\\[", "\\(");
-        formula = formula.replaceAll("\\]", "\\)");
         while (formula.contains("(") && formula.contains(")")){
-            int beginParenthesesIndex = formula.indexOf("(");
-            while (formula.indexOf("(", beginParenthesesIndex + 1) != -1){
-                beginParenthesesIndex = formula.indexOf("(", beginParenthesesIndex + 1);
-            }
-            int endParenthesesIndex = formula.indexOf(")", beginParenthesesIndex);
-            String[] splitParts = new String[3];
-            splitParts[0] = formula.substring(0, beginParenthesesIndex);
-            splitParts[1] = formula.substring(beginParenthesesIndex, endParenthesesIndex + 1).replaceAll("\\(+|\\)+", "");;
-            splitParts[2] = formula.substring(endParenthesesIndex + 1, formula.length());
+            String[] splitParts = splitByInnerParentheses(formula);
 
-            String compoundString = "";
             int parenNumber = 0;
             if (splitParts[2].replaceAll("(\\)|\\p{Alpha}).*", "").isEmpty()) parenNumber = 1;
             else parenNumber = Integer.parseInt(splitParts[2].replaceAll("(\\)|\\p{Alpha}).*", ""));
+
             String[] compoundElements = null;
             {
                 String[] tempCompoundElements = splitParts[1].split("(?=\\p{Upper})");
@@ -421,12 +411,16 @@ class EquationBalance { // put everything into a neat class
                     }
                 }
             }
+
+            String compoundString = "";
             int[] elementNumber = new int[compoundElements.length];
             for (int k = 0; k < elementNumber.length; ++k){
-                if (compoundElements[k].replaceAll("\\p{Alpha}", "").isEmpty()) elementNumber[k] = parenNumber;
-                else elementNumber[k] = Integer.parseInt(compoundElements[k].replaceAll("\\p{Alpha}", "")) * parenNumber;
-                compoundString = compoundString.concat(compoundElements[k].replaceAll("\\d*", "").concat(Integer.toString(elementNumber[k])));
+                String numericOrEmpty = compoundElements[k].replaceAll("\\p{Alpha}", "");
+                if (numericOrEmpty.isEmpty()) elementNumber[k] = parenNumber;
+                else elementNumber[k] = Integer.parseInt(numericOrEmpty) * parenNumber;
+                compoundString = compoundString.concat(compoundElements[k].replaceAll("\\d", "").concat(Integer.toString(elementNumber[k])));
             }
+
             splitParts[1] = compoundString;
             splitParts[2] = splitParts[2].replaceAll("^\\d*", "");
             String finalString = "";
@@ -434,6 +428,43 @@ class EquationBalance { // put everything into a neat class
             formula = finalString;
         }
         return formula;
+    }
+
+    private static void doSubstitutions(String[]... arrays){
+        for (int i = 0; i < arrays.length; ++i){
+            for (int j = 0; j < arrays[i].length; ++j){
+                arrays[i][j] = arrays[i][j].replace("[", "(")
+                        .replace("]", ")")
+                        .replaceAll("\\.|•|·", "⋅");
+            }
+        }
+    }
+
+    private static String[] splitByInnerParentheses(String formula){
+        int beginParenthesesIndex = formula.indexOf("(");
+        while (formula.indexOf("(", beginParenthesesIndex + 1) != -1){
+            beginParenthesesIndex = formula.indexOf("(", beginParenthesesIndex + 1);
+        }
+        int endParenthesesIndex = formula.indexOf(")", beginParenthesesIndex);
+        String[] splitParts = new String[3];
+        splitParts[0] = formula.substring(0, beginParenthesesIndex);
+        splitParts[1] = formula.substring(beginParenthesesIndex, endParenthesesIndex + 1).replaceAll("\\(+|\\)+", "");;
+        splitParts[2] = formula.substring(endParenthesesIndex + 1, formula.length());
+        return splitParts;
+    }
+
+    private static int countContinuousAlphaNum(String str, int index){
+        int count = 0;
+        for (int i = index; i < str.length(); ++i){
+            char x = str.charAt(i);
+            if (Character.isDigit(x) || Character.isLetter(x)){
+                ++count;
+            }
+            else{
+                break;
+            }
+        }
+        return count;
     }
 
     private static int gcd(int a, int b){
