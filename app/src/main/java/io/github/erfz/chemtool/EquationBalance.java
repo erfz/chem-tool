@@ -475,18 +475,24 @@ class EquationBalance { // put everything into a neat class
 
     private static int countContinuousAlphaNumParen(String str, int index) {
         int count = 0;
-        int parenthesesCount = 0;
+        int leftParenthesesCount = 0;
+        int rightParenthesesCount = 0;
         for (int i = index; i < str.length(); ++i) {
             char x = str.charAt(i);
             if (Character.isDigit(x) || Character.isLetter(x)) {
                 ++count;
             } else if (x == '(') {
-                ++parenthesesCount;
+                ++leftParenthesesCount;
+            } else if (x == ')') {
+                if (leftParenthesesCount == rightParenthesesCount) {
+                    break;
+                }
+                ++rightParenthesesCount;
             } else {
                 break;
             }
         }
-        count += 2*parenthesesCount;
+        count += 2 * leftParenthesesCount;
         return count;
     }
 
