@@ -13,11 +13,15 @@ class EquationBalance { // put everything into a neat class
         String[] eqnRHSplit = eqnHS[1].split("\\++");
 
         for (int i = 0; i < eqnLHSplit.length; ++i){ // nuke user-entered coefficients
-            eqnLHSplit[i] = eqnLHSplit[i].replaceAll("^\\d+","");
+            eqnLHSplit[i] = eqnLHSplit[i]
+                    .replaceAll("^\\d+","")
+                    .replaceAll("(?<=\\()\\d+", "");
         }
 
         for (int i = 0; i < eqnRHSplit.length; ++i){
-            eqnRHSplit[i] = eqnRHSplit[i].replaceAll("^\\d+","");
+            eqnRHSplit[i] = eqnRHSplit[i]
+                    .replaceAll("^\\d+","")
+                    .replaceAll("(?<=\\()\\d+", "");;
         }
 
         String[] lhsPrintArray = new String[eqnLHSplit.length];
