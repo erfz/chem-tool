@@ -12,4 +12,3 @@ Made by Jason Guo
 - Side-by-side widget positioning in landscape orientation (need fragments working)
 - Real log calls
 - AppBarLayout
-- Fix icon
