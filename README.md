@@ -1,7 +1,9 @@
 # ChemTool
 Made by Jason Guo
 # To-do
-- Cleanup Balance function class
+- Cleanup Balance function class (in progress)
+- Exception handling improvements (check every parentheses has a closing?)
+- Show specific snackbars for different exception scenarios (put ID in construtor?)
 - Override ContextMenu paste()
 - Stoichi. (molecules alone and reaction calculations)
 - Add more drawables
