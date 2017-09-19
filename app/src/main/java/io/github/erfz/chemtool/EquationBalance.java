@@ -1,15 +1,13 @@
 package io.github.erfz.chemtool;
 
-import java.util.Arrays;
-
 /**
  * Created by riesz on 8/19/2016.
  */
 
 class EquationBalance { // put everything into a neat class
-    static String balanceEquation(String equation) throws InvalidEquationException {
+    static String balanceEquation(String equation) throws InvalidInputException {
         String[] eqnHS = equation.replaceAll("\\s+", "").split("=");
-        if (eqnHS.length != 2) throw new InvalidEquationException(
+        if (eqnHS.length != 2) throw new InvalidInputException(
                 "Splitting by equals sign did not yield two parts.");
 
         String[] eqnLHSplit = eqnHS[0].split("\\++");
@@ -32,14 +30,24 @@ class EquationBalance { // put everything into a neat class
         System.arraycopy(eqnLHSplit, 0, lhsPrintArray, 0, lhsPrintArray.length);
         System.arraycopy(eqnRHSplit, 0, rhsPrintArray, 0, rhsPrintArray.length);
 
-        doSubstitutions(eqnHS, eqnLHSplit, eqnRHSplit);
+        doSubstitutions(eqnHS, eqnLHSplit, eqnRHSplit); // all calls to hasUnclosedParentheses() MUST follow this
 
         for (int i = 0; i < eqnLHSplit.length; ++i) {
-            eqnLHSplit[i] = parseFormula(eqnLHSplit[i]);
+            if (hasUnclosedParentheses(eqnLHSplit[i])) {
+                throw new InvalidInputException(
+                        "Formula on left side at index " + i + " has unclosed parentheses.");
+            } else {
+                eqnLHSplit[i] = parseFormula(eqnLHSplit[i]);
+            }
         }
 
         for (int i = 0; i < eqnRHSplit.length; ++i) {
-            eqnRHSplit[i] = parseFormula(eqnRHSplit[i]);
+            if (hasUnclosedParentheses(eqnRHSplit[i])) {
+                throw new InvalidInputException(
+                        "Formula on right side at index " + i + " has unclosed parentheses.");
+            } else {
+                eqnRHSplit[i] = parseFormula(eqnRHSplit[i]);
+            }
         }
 
         String[] eqnLHEle = null;
@@ -105,7 +113,7 @@ class EquationBalance { // put everything into a neat class
             int numElementsR = eqnRHEle.length - counter;
 
             if (numElementsL == numElementsR) numElements = numElementsL;
-            else throw new InvalidEquationException(
+            else throw new InvalidInputException(
                     "Number of elements on the left and right side do not match.");
         }
 
@@ -134,7 +142,7 @@ class EquationBalance { // put everything into a neat class
             for (String RHEle : eqnRHEle) {
                 if (LHEle.equals(RHEle)) elementMatch = true;
             }
-            if (!elementMatch) throw new InvalidEquationException(
+            if (!elementMatch) throw new InvalidInputException(
                     "Value of elements on the left and right side do not match.");
         }
 
@@ -201,7 +209,9 @@ class EquationBalance { // put everything into a neat class
             for (int j = 0; j < numMolecules; ++j) {
                 int lastEleIndex = 0;
                 while (eqnMolecules[j].contains(eqnElements[i]) && eqnMolecules[j].indexOf(eqnElements[i], lastEleIndex) != -1) {
-                    if (eqnMolecules[j].substring(eqnMolecules[j].indexOf(eqnElements[i], lastEleIndex) + eqnElements[i].length(), eqnMolecules[j].length()).replaceAll("(\\d|\\p{Upper}).*", "").isEmpty()) {
+                    if (eqnMolecules[j].substring(eqnMolecules[j]
+                            .indexOf(eqnElements[i], lastEleIndex) + eqnElements[i].length(), eqnMolecules[j].length())
+                            .replaceAll("(\\d|\\p{Upper}).*", "").isEmpty()) {
                         lastEleIndex = eqnMolecules[j].indexOf(eqnElements[i], lastEleIndex) + eqnElements[i].length();
                         String temp = eqnMolecules[j].substring(lastEleIndex, eqnMolecules[j].length()).replaceAll("\\p{Alpha}.*", "");
                         if (temp.isEmpty()) eqnSolnSys[i][j] += 1;
@@ -374,13 +384,13 @@ class EquationBalance { // put everything into a neat class
         }
     }
 
-    static String parseFormula(String formula) {
+    static String parseFormula(String formula) throws InvalidInputException {
         formula = parseParenthesesAndBrackets(
                 parseDot(formula));
         return formula;
     }
 
-    private static String parseDot(String formula) {
+    private static String parseDot(String formula) throws InvalidInputException {
         if (formula.contains("⋅")) {
             int index = formula.indexOf("⋅");
             int multiple = 0;
@@ -401,7 +411,6 @@ class EquationBalance { // put everything into a neat class
             afterDot = afterDot.substring(multipleLength, multipleLength + contAlphaNumLength)
                     + ")" + multiple + afterDot.substring(multipleLength + contAlphaNumLength);
             formula = beforeDot + afterDot;
-            System.out.println(formula);
         }
         return formula;
     }
@@ -409,7 +418,6 @@ class EquationBalance { // put everything into a neat class
     private static String parseParenthesesAndBrackets(String formula) {
         while (formula.contains("(") && formula.contains(")")) {
             String[] splitParts = splitByInnerParentheses(formula);
-            System.out.println(Arrays.toString(splitParts));
 
             int parenNumber = 0;
             if (splitParts[2].replaceAll("(\\)|\\p{Alpha}).*", "").isEmpty()) parenNumber = 1;
@@ -441,7 +449,8 @@ class EquationBalance { // put everything into a neat class
                 String numericOrEmpty = compoundElements[k].replaceAll("\\p{Alpha}", "");
                 if (numericOrEmpty.isEmpty()) elementNumber[k] = parenNumber;
                 else elementNumber[k] = Integer.parseInt(numericOrEmpty) * parenNumber;
-                compoundString = compoundString.concat(compoundElements[k].replaceAll("\\d", "").concat(Integer.toString(elementNumber[k])));
+                compoundString = compoundString.concat(compoundElements[k].replaceAll("\\d", "")
+                        .concat(Integer.toString(elementNumber[k])));
             }
 
             splitParts[1] = compoundString;
@@ -477,7 +486,7 @@ class EquationBalance { // put everything into a neat class
         return splitParts;
     }
 
-    private static int countContinuousAlphaNumParen(String str, int index) {
+    private static int countContinuousAlphaNumParen(String str, int index) throws InvalidInputException {
         int count = 0;
         int leftParenthesesCount = 0;
         int rightParenthesesCount = 0;
@@ -496,8 +505,29 @@ class EquationBalance { // put everything into a neat class
                 break;
             }
         }
-        count += 2 * leftParenthesesCount;
-        return count;
+        if (leftParenthesesCount != rightParenthesesCount) {
+            throw new InvalidInputException(
+                    "Count of continuous alpha/num/parentheses region had unexpected number of right parentheses.");
+        } else {
+            count += leftParenthesesCount + rightParenthesesCount;
+            return count;
+        }
+    }
+
+    private static boolean hasUnclosedParentheses(String formula) { // MUST be called after doSubstitutions()
+        int leftParenthesesCount = 0;
+        int rightParenthesesCount = 0;
+        for (int i = 0; i < formula.length(); ++i) {
+            if (formula.charAt(i) == '(') {
+                ++leftParenthesesCount;
+            }
+        }
+        for (int i = 0; i < formula.length(); ++i) {
+            if (formula.charAt(i) == ')') {
+                ++rightParenthesesCount;
+            }
+        }
+        return leftParenthesesCount != rightParenthesesCount;
     }
 
     private static int gcd(int a, int b) {

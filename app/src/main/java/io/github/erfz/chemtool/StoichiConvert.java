@@ -8,7 +8,8 @@ import java.util.HashMap;
 
 class StoichiConvert {
     private static final HashMap<String, Double> map = new HashMap<>();
-    static{
+
+    static {
         map.put("H", 1.008);
         map.put("He", 4.0026);
         map.put("Li", 6.94);
@@ -42,7 +43,7 @@ class StoichiConvert {
         map.put("Ga", 69.723);
         map.put("Ge", 72.630);
         map.put("As", 74.922);
-        map.put("Se",78.971);
+        map.put("Se", 78.971);
         map.put("Br", 79.904);
         map.put("Kr", 83.798);
         map.put("Rb", 85.468);
@@ -129,21 +130,21 @@ class StoichiConvert {
         map.put("Og", 294.0);
     }
 
-    static double gramsToMoles(String formula, double mass){
-        return mass/getFormulaMass(formula);
+    static double gramsToMoles(String formula, double mass) throws InvalidInputException {
+        return mass / getFormulaMass(formula);
     }
 
-    static double molesToGrams(String formula, double moles){
-        return moles*getFormulaMass(formula);
+    static double molesToGrams(String formula, double moles) throws InvalidInputException {
+        return moles * getFormulaMass(formula);
     }
 
-    private static double getFormulaMass(String formula){
+    private static double getFormulaMass(String formula) throws InvalidInputException {
         double totalMass = 0;
-        formula = formula.replaceAll("^\\d+",""); // must first nuke leading coeff. so that paren/brckt removal is correct
+        formula = formula.replaceAll("^\\d+", ""); // must first nuke leading coeff. so that paren/brckt removal is correct
         formula = EquationBalance.parseFormula(formula);
         String[] formulaArray = formula.split("(?=\\p{Upper})");
 
-        for (String str : formulaArray){
+        for (String str : formulaArray) {
             String element = str.replaceAll("\\d", "");
             double elementMass = map.get(element);
             double numElement = Double.parseDouble(str.replaceAll("(\\p{Alpha})", ""));
