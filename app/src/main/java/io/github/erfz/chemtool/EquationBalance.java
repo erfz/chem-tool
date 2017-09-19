@@ -7,9 +7,10 @@ import java.util.Arrays;
  */
 
 class EquationBalance { // put everything into a neat class
-    static String balanceEquation(String equation) {
+    static String balanceEquation(String equation) throws InvalidEquationException {
         String[] eqnHS = equation.replaceAll("\\s+", "").split("=");
-        if (eqnHS.length != 2) throw new IllegalArgumentException("Your equation is invalid.");
+        if (eqnHS.length != 2) throw new InvalidEquationException(
+                "Splitting by equals sign did not yield two parts.");
 
         String[] eqnLHSplit = eqnHS[0].split("\\++");
         String[] eqnRHSplit = eqnHS[1].split("\\++");
@@ -104,7 +105,8 @@ class EquationBalance { // put everything into a neat class
             int numElementsR = eqnRHEle.length - counter;
 
             if (numElementsL == numElementsR) numElements = numElementsL;
-            else throw new IllegalArgumentException("Your equation is invalid.");
+            else throw new InvalidEquationException(
+                    "Number of elements on the left and right side do not match.");
         }
 
         String[] eqnElements = new String[numElements];
@@ -132,7 +134,8 @@ class EquationBalance { // put everything into a neat class
             for (String RHEle : eqnRHEle) {
                 if (LHEle.equals(RHEle)) elementMatch = true;
             }
-            if (!elementMatch) throw new IllegalArgumentException("Your equation is invalid.");
+            if (!elementMatch) throw new InvalidEquationException(
+                    "Value of elements on the left and right side do not match.");
         }
 
         int numMolecules = 0;
@@ -453,7 +456,8 @@ class EquationBalance { // put everything into a neat class
     private static void doSubstitutions(String[]... arrays) {
         for (int i = 0; i < arrays.length; ++i) {
             for (int j = 0; j < arrays[i].length; ++j) {
-                arrays[i][j] = arrays[i][j].replace("[", "(")
+                arrays[i][j] = arrays[i][j]
+                        .replace("[", "(")
                         .replace("]", ")")
                         .replaceAll("\\.|•|·", "⋅");
             }
