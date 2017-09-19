@@ -1,5 +1,7 @@
 package io.github.erfz.chemtool;
 
+import java.util.Stack;
+
 /**
  * Created by riesz on 8/19/2016.
  */
@@ -30,23 +32,23 @@ class EquationBalance { // put everything into a neat class
         System.arraycopy(eqnLHSplit, 0, lhsPrintArray, 0, lhsPrintArray.length);
         System.arraycopy(eqnRHSplit, 0, rhsPrintArray, 0, rhsPrintArray.length);
 
-        doSubstitutions(eqnHS, eqnLHSplit, eqnRHSplit); // all calls to hasUnclosedParentheses() MUST follow this
+        doSubstitutions(eqnHS);
 
         for (int i = 0; i < eqnLHSplit.length; ++i) {
-            if (hasUnclosedParentheses(eqnLHSplit[i])) {
+            if (isEveryParenthesesClosed(eqnLHSplit[i])) {
+                eqnLHSplit[i] = parseFormula(eqnLHSplit[i]);
+            } else {
                 throw new InvalidInputException(
                         "Formula on left side at index " + i + " has unclosed parentheses.");
-            } else {
-                eqnLHSplit[i] = parseFormula(eqnLHSplit[i]);
             }
         }
 
         for (int i = 0; i < eqnRHSplit.length; ++i) {
-            if (hasUnclosedParentheses(eqnRHSplit[i])) {
+            if (isEveryParenthesesClosed(eqnRHSplit[i])) {
+                eqnRHSplit[i] = parseFormula(eqnRHSplit[i]);
+            } else {
                 throw new InvalidInputException(
                         "Formula on right side at index " + i + " has unclosed parentheses.");
-            } else {
-                eqnRHSplit[i] = parseFormula(eqnRHSplit[i]);
             }
         }
 
@@ -384,13 +386,14 @@ class EquationBalance { // put everything into a neat class
         }
     }
 
-    static String parseFormula(String formula) throws InvalidInputException {
+    static String parseFormula(String formula) {
         formula = parseParenthesesAndBrackets(
                 parseDot(formula));
         return formula;
     }
 
-    private static String parseDot(String formula) throws InvalidInputException {
+    private static String parseDot(String formula) {
+        formula = doSubstitutions(formula);
         if (formula.contains("⋅")) {
             int index = formula.indexOf("⋅");
             int multiple = 0;
@@ -416,6 +419,7 @@ class EquationBalance { // put everything into a neat class
     }
 
     private static String parseParenthesesAndBrackets(String formula) {
+        formula = doSubstitutions(formula);
         while (formula.contains("(") && formula.contains(")")) {
             String[] splitParts = splitByInnerParentheses(formula);
 
@@ -473,7 +477,15 @@ class EquationBalance { // put everything into a neat class
         }
     }
 
+    private static String doSubstitutions(String str) {
+        str = str.replace("[", "(")
+                .replace("]", ")")
+                .replaceAll("\\.|•|·", "⋅");
+        return str;
+    }
+
     private static String[] splitByInnerParentheses(String formula) {
+        formula = doSubstitutions(formula);
         int beginParenthesesIndex = formula.indexOf("(");
         while (formula.indexOf("(", beginParenthesesIndex + 1) != -1) {
             beginParenthesesIndex = formula.indexOf("(", beginParenthesesIndex + 1);
@@ -486,7 +498,8 @@ class EquationBalance { // put everything into a neat class
         return splitParts;
     }
 
-    private static int countContinuousAlphaNumParen(String str, int index) throws InvalidInputException {
+    private static int countContinuousAlphaNumParen(String str, int index) {
+        str = doSubstitutions(str);
         int count = 0;
         int leftParenthesesCount = 0;
         int rightParenthesesCount = 0;
@@ -505,29 +518,31 @@ class EquationBalance { // put everything into a neat class
                 break;
             }
         }
-        if (leftParenthesesCount != rightParenthesesCount) {
-            throw new InvalidInputException(
-                    "Count of continuous alpha/num/parentheses region had unexpected number of right parentheses.");
-        } else {
-            count += leftParenthesesCount + rightParenthesesCount;
-            return count;
-        }
+        count += leftParenthesesCount + rightParenthesesCount;
+        return count;
     }
 
-    private static boolean hasUnclosedParentheses(String formula) { // MUST be called after doSubstitutions()
-        int leftParenthesesCount = 0;
-        int rightParenthesesCount = 0;
+    private static boolean isEveryParenthesesClosed(String formula) {
+        formula = doSubstitutions(formula);
+        if (formula.isEmpty()) {
+            return true;
+        }
+
+        Stack<Character> stack = new Stack<>();
         for (int i = 0; i < formula.length(); ++i) {
-            if (formula.charAt(i) == '(') {
-                ++leftParenthesesCount;
+            char current = formula.charAt(i);
+            if (current == '(') {
+                stack.push(current);
+            } else if (current == ')') {
+                if (stack.isEmpty()) {
+                    return false;
+                } else {
+                    stack.pop();
+                }
             }
         }
-        for (int i = 0; i < formula.length(); ++i) {
-            if (formula.charAt(i) == ')') {
-                ++rightParenthesesCount;
-            }
-        }
-        return leftParenthesesCount != rightParenthesesCount;
+
+        return stack.isEmpty();
     }
 
     private static int gcd(int a, int b) {
