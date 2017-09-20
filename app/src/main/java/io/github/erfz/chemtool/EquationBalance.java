@@ -6,7 +6,10 @@ import java.util.Stack;
  * Created by riesz on 8/19/2016.
  */
 
-class EquationBalance { // put everything into a neat class
+final class EquationBalance {
+    private EquationBalance() {
+    }
+
     static String balanceEquation(String equation) throws InvalidInputException {
         String[] eqnHS = equation.replaceAll("\\s+", "").split("=");
         if (eqnHS.length != 2) throw new InvalidInputException(
