@@ -11,49 +11,23 @@ final class EquationBalance {
     }
 
     static String balanceEquation(String equation) throws InvalidInputException {
-        String[] eqnHS = equation.replaceAll("\\s+", "").split("=");
+        equation = equation
+                .replaceAll("\\s+", "")
+                .replaceAll("(^|(?<=\\=)|(?<=\\+)|(?<=\\())\\d+", "");
+
+        String[] eqnHS = equation.split("=");
         if (eqnHS.length != 2) throw new InvalidInputException(
                 "Splitting by equals sign did not yield two parts.");
 
         String[] eqnLHSplit = eqnHS[0].split("\\++");
         String[] eqnRHSplit = eqnHS[1].split("\\++");
 
-        for (int i = 0; i < eqnLHSplit.length; ++i) { // nuke user-entered coefficients
-            eqnLHSplit[i] = eqnLHSplit[i]
-                    .replaceAll("^\\d+", "")
-                    .replaceAll("(?<=\\()\\d+", "");
-        }
+        String[] lhsPrintArray = eqnLHSplit.clone(); // stored for user-display purposes
+        String[] rhsPrintArray = eqnRHSplit.clone();
 
-        for (int i = 0; i < eqnRHSplit.length; ++i) {
-            eqnRHSplit[i] = eqnRHSplit[i]
-                    .replaceAll("^\\d+", "")
-                    .replaceAll("(?<=\\()\\d+", "");
-        }
-
-        String[] lhsPrintArray = new String[eqnLHSplit.length];
-        String[] rhsPrintArray = new String[eqnRHSplit.length];
-        System.arraycopy(eqnLHSplit, 0, lhsPrintArray, 0, lhsPrintArray.length);
-        System.arraycopy(eqnRHSplit, 0, rhsPrintArray, 0, rhsPrintArray.length);
-
-        doSubstitutions(eqnHS);
-
-        for (int i = 0; i < eqnLHSplit.length; ++i) {
-            if (isEveryParenthesesClosed(eqnLHSplit[i])) {
-                eqnLHSplit[i] = parseFormula(eqnLHSplit[i]);
-            } else {
-                throw new InvalidInputException(
-                        "Formula on left side at index " + i + " has unclosed parentheses.");
-            }
-        }
-
-        for (int i = 0; i < eqnRHSplit.length; ++i) {
-            if (isEveryParenthesesClosed(eqnRHSplit[i])) {
-                eqnRHSplit[i] = parseFormula(eqnRHSplit[i]);
-            } else {
-                throw new InvalidInputException(
-                        "Formula on right side at index " + i + " has unclosed parentheses.");
-            }
-        }
+        eqnHS = doSubstitutions(eqnHS);
+        eqnLHSplit = parseMolecules(eqnLHSplit);
+        eqnRHSplit = parseMolecules(eqnRHSplit);
 
         String[] eqnLHEle = null;
         String[] eqnRHEle = null;
@@ -389,10 +363,23 @@ final class EquationBalance {
         }
     }
 
-    static String parseFormula(String formula) {
-        formula = parseParenthesesAndBrackets(
-                parseDot(formula));
+    static String parseFormula(String formula) throws InvalidInputException {
+        if (isEveryParenthesesClosed(formula)) {
+            formula = parseParenthesesAndBrackets(
+                    parseDot(formula));
+        } else {
+            throw new InvalidInputException(
+                    "Formula \"" + formula + "\" has unclosed parentheses.");
+        }
         return formula;
+    }
+
+    private static String[] parseMolecules(String[] molecules) throws InvalidInputException {
+        String[] array = new String[molecules.length];
+        for (int i = 0; i < array.length; ++i) {
+            array[i] = parseFormula(molecules[i]);
+        }
+        return array;
     }
 
     private static String parseDot(String formula) {
@@ -469,22 +456,20 @@ final class EquationBalance {
         return formula;
     }
 
-    private static void doSubstitutions(String[]... arrays) {
-        for (int i = 0; i < arrays.length; ++i) {
-            for (int j = 0; j < arrays[i].length; ++j) {
-                arrays[i][j] = arrays[i][j]
-                        .replace("[", "(")
-                        .replace("]", ")")
-                        .replaceAll("\\.|•|·", "⋅");
-            }
-        }
-    }
-
     private static String doSubstitutions(String str) {
-        str = str.replace("[", "(")
+        str = str
+                .replace("[", "(")
                 .replace("]", ")")
                 .replaceAll("\\.|•|·", "⋅");
         return str;
+    }
+
+    private static String[] doSubstitutions(String[] array) {
+        String[] arr = new String[array.length];
+        for (int i = 0; i < arr.length; ++i) {
+            arr[i] = doSubstitutions(array[i]);
+        }
+        return arr;
     }
 
     private static String[] splitByInnerParentheses(String formula) {
