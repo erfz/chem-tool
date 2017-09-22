@@ -1,5 +1,9 @@
 package io.github.erfz.chemtool;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -29,157 +33,42 @@ final class EquationBalance {
         eqnLHSplit = parseMolecules(eqnLHSplit);
         eqnRHSplit = parseMolecules(eqnRHSplit);
 
-        String[] eqnLHEle = null;
-        String[] eqnRHEle = null;
+        String[] eqnElements;
+        int numElements;
         {
-            String[] tempLHEle = eqnHS[0].replaceAll("(\\+|\\d|\\(|\\)|⋅)", "").split("(?=\\p{Upper})");
-            String[] tempRHEle = eqnHS[1].replaceAll("(\\+|\\d|\\(|\\)|⋅)", "").split("(?=\\p{Upper})");
+            String[] tempLeftEle = eqnHS[0].replaceAll("(\\+|\\d|\\(|\\)|⋅)", "").split("(?=\\p{Upper})");
+            String[] tempRightEle = eqnHS[1].replaceAll("(\\+|\\d|\\(|\\)|⋅)", "").split("(?=\\p{Upper})");
 
-            int LHElecount = 0;
-            int RHElecount = 0;
-            for (int i = 0; i < tempLHEle.length; ++i) {
-                if (!tempLHEle[i].equals("")) {
-                    ++LHElecount;
-                }
-            }
-            for (int i = 0; i < tempRHEle.length; ++i) {
-                if (!tempRHEle[i].equals("")) {
-                    ++RHElecount;
-                }
-            }
+            Set<String> leftEle = new HashSet<>(Arrays.asList(tempLeftEle));
+            Set<String> rightEle = new HashSet<>(Arrays.asList(tempRightEle));
+            leftEle.remove("");
+            rightEle.remove("");
 
-            eqnLHEle = new String[LHElecount];
-            eqnRHEle = new String[RHElecount];
-
-            int count = 0;
-            for (int i = 0; i < tempLHEle.length; ++i) {
-                if (!tempLHEle[i].equals("")) {
-                    eqnLHEle[count] = tempLHEle[i];
-                    ++count;
-                }
+            if (leftEle.equals(rightEle)) {
+                numElements = leftEle.size();
+                eqnElements = leftEle.toArray(new String[numElements]);
+            } else {
+                throw new InvalidInputException("Elements on left and right side of equation do not match.");
             }
-            count = 0;
-            for (int i = 0; i < tempRHEle.length; ++i) {
-                if (!tempRHEle[i].equals("")) {
-                    eqnRHEle[count] = tempRHEle[i];
-                    ++count;
-                }
-            }
-
         }
 
-
-        int numElements = 0;
-        { // find actual # of elements
-            int counter = 0;
-            for (int i = 0; i < eqnLHEle.length - 1; ++i) {
-                boolean eleBoolean = false;
-                for (int j = i + 1; j < eqnLHEle.length; ++j) {
-                    if (eqnLHEle[i].equals(eqnLHEle[j])) eleBoolean = true;
-                }
-                if (eleBoolean) ++counter;
-            }
-            int numElementsL = eqnLHEle.length - counter;
-
-            counter = 0;
-            for (int i = 0; i < eqnRHEle.length - 1; ++i) {
-                boolean eleBoolean = false;
-                for (int j = i + 1; j < eqnRHEle.length; ++j) {
-                    if (eqnRHEle[i].equals(eqnRHEle[j])) eleBoolean = true;
-                }
-                if (eleBoolean) ++counter;
-            }
-            int numElementsR = eqnRHEle.length - counter;
-
-            if (numElementsL == numElementsR) numElements = numElementsL;
-            else throw new InvalidInputException(
-                    "Number of elements on the left and right side do not match.");
-        }
-
-        String[] eqnElements = new String[numElements];
+        String[] eqnMolecules;
+        int numMolecules;
+        int matrixNegIndex;
         {
-            int count = 0;
-            String[] tempArray = null;
-            if (eqnLHEle.length <= eqnRHEle.length) tempArray = eqnLHEle;
-            else tempArray = eqnRHEle;
+            Set<String> leftMoleculesSet = new LinkedHashSet<>(Arrays.asList(eqnLHSplit));
+            Set<String> rightMoleculesSet = new LinkedHashSet<>(Arrays.asList(eqnRHSplit));
+            leftMoleculesSet.remove("");
+            rightMoleculesSet.remove("");
 
-            for (int i = 0; i < tempArray.length - 1; ++i) {
-                boolean eleBoolean = true;
-                for (int j = i + 1; j < tempArray.length; ++j) {
-                    if (tempArray[i].equals(tempArray[j])) eleBoolean = false;
-                }
-                if (eleBoolean) {
-                    eqnElements[count] = tempArray[i];
-                    ++count;
-                }
-            }
-            eqnElements[eqnElements.length - 1] = tempArray[tempArray.length - 1];
-        }
+            matrixNegIndex = leftMoleculesSet.size();
+            String[] leftMolecules = leftMoleculesSet.toArray(new String[leftMoleculesSet.size()]);
+            String[] rightMolecules = rightMoleculesSet.toArray(new String[rightMoleculesSet.size()]);
 
-        for (String LHEle : eqnLHEle) {
-            boolean elementMatch = false;
-            for (String RHEle : eqnRHEle) {
-                if (LHEle.equals(RHEle)) elementMatch = true;
-            }
-            if (!elementMatch) throw new InvalidInputException(
-                    "Value of elements on the left and right side do not match.");
-        }
-
-        int numMolecules = 0;
-        int matrixNegIndex = 0;
-        { // find actual # of molecules
-            int counter = 0;
-            for (int i = 0; i < eqnLHSplit.length - 1; ++i) {
-                boolean eleBoolean = false;
-                for (int j = i + 1; j < eqnLHSplit.length; ++j) {
-                    if (eqnLHSplit[i].equals(eqnLHSplit[j])) eleBoolean = true;
-                }
-                if (eleBoolean) ++counter;
-            }
-            int numMoleculesL = eqnLHSplit.length - counter;
-            matrixNegIndex = numMoleculesL;
-
-            counter = 0;
-            for (int i = 0; i < eqnRHSplit.length - 1; ++i) {
-                boolean eleBoolean = false;
-                for (int j = i + 1; j < eqnRHSplit.length; ++j) {
-                    if (eqnRHSplit[i].equals(eqnRHSplit[j])) eleBoolean = true;
-                }
-                if (eleBoolean) ++counter;
-            }
-            int numMoleculesR = eqnRHSplit.length - counter;
-
-            numMolecules = numMoleculesL + numMoleculesR;
-        }
-
-        String[] eqnMolecules = new String[numMolecules];
-        {
-            int count = 0;
-
-            for (int i = 0; i < eqnLHSplit.length - 1; ++i) {
-                boolean eleBoolean = true;
-                for (int j = i + 1; j < eqnLHSplit.length; ++j) {
-                    if (eqnLHSplit[i].equals(eqnLHSplit[j])) eleBoolean = false;
-                }
-                if (eleBoolean) {
-                    eqnMolecules[count] = eqnLHSplit[i];
-                    ++count;
-                }
-            }
-            ++count;
-            eqnMolecules[count - 1] = eqnLHSplit[eqnLHSplit.length - 1];
-
-            for (int i = 0; i < eqnRHSplit.length - 1; ++i) {
-                boolean eleBoolean = true;
-                for (int j = i + 1; j < eqnRHSplit.length; ++j) {
-                    if (eqnRHSplit[i].equals(eqnRHSplit[j])) eleBoolean = false;
-                }
-                if (eleBoolean) {
-                    eqnMolecules[count] = eqnRHSplit[i];
-                    ++count;
-                }
-            }
-            eqnMolecules[eqnMolecules.length - 1] = eqnRHSplit[eqnRHSplit.length - 1];
+            numMolecules = leftMolecules.length + rightMolecules.length;
+            eqnMolecules = new String[numMolecules];
+            System.arraycopy(leftMolecules, 0, eqnMolecules, 0, leftMolecules.length);
+            System.arraycopy(rightMolecules, 0, eqnMolecules, leftMolecules.length, rightMolecules.length);
         }
 
         double[][] eqnSolnSys = new double[numElements][numMolecules + 1];
