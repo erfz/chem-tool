@@ -25,8 +25,8 @@ final class EquationBalance {
         String[] eqnLHSplit = eqnHS[0].split("\\++");
         String[] eqnRHSplit = eqnHS[1].split("\\++");
 
-        String[] lhsPrintArray = eqnLHSplit.clone(); // stored for user-display purposes
-        String[] rhsPrintArray = eqnRHSplit.clone();
+        String[] lhsPrintArray = returnCleanArray(eqnLHSplit); // stored for user-display purposes
+        String[] rhsPrintArray = returnCleanArray(eqnRHSplit);
 
         eqnHS = doSubstitutions(eqnHS);
         eqnLHSplit = parseMolecules(eqnLHSplit);
@@ -55,14 +55,9 @@ final class EquationBalance {
         int numMolecules;
         int matrixNegIndex;
         {
-            Set<String> leftMoleculesSet = new LinkedHashSet<>(Arrays.asList(eqnLHSplit));
-            Set<String> rightMoleculesSet = new LinkedHashSet<>(Arrays.asList(eqnRHSplit));
-            leftMoleculesSet.remove("");
-            rightMoleculesSet.remove("");
-
-            matrixNegIndex = leftMoleculesSet.size();
-            String[] leftMolecules = leftMoleculesSet.toArray(new String[leftMoleculesSet.size()]);
-            String[] rightMolecules = rightMoleculesSet.toArray(new String[rightMoleculesSet.size()]);
+            String[] leftMolecules = returnCleanArray(eqnLHSplit);
+            String[] rightMolecules = returnCleanArray(eqnRHSplit);
+            matrixNegIndex = leftMolecules.length;
 
             numMolecules = leftMolecules.length + rightMolecules.length;
             eqnMolecules = new String[numMolecules];
@@ -292,6 +287,13 @@ final class EquationBalance {
             formula = beforeDot + afterDot;
         }
         return formula;
+    }
+
+    private static String[] returnCleanArray(String[] arr){
+        Set<String> set = new LinkedHashSet<>(Arrays.asList(arr));
+        set.remove("");
+        arr = set.toArray(new String[set.size()]);
+        return arr;
     }
 
     private static String parseParenthesesAndBrackets(String formula) {
