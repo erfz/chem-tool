@@ -1,7 +1,6 @@
 package io.github.erfz.chemtool;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -39,8 +38,8 @@ final class EquationBalance {
             String[] tempLeftEle = eqnHS[0].replaceAll("(\\+|\\d|\\(|\\)|⋅)", "").split("(?=\\p{Upper})");
             String[] tempRightEle = eqnHS[1].replaceAll("(\\+|\\d|\\(|\\)|⋅)", "").split("(?=\\p{Upper})");
 
-            Set<String> leftEle = new HashSet<>(Arrays.asList(tempLeftEle));
-            Set<String> rightEle = new HashSet<>(Arrays.asList(tempRightEle));
+            Set<String> leftEle = new LinkedHashSet<>(Arrays.asList(tempLeftEle));
+            Set<String> rightEle = new LinkedHashSet<>(Arrays.asList(tempRightEle));
             leftEle.remove("");
             rightEle.remove("");
 
@@ -109,15 +108,13 @@ final class EquationBalance {
             String[][] nthMoleculeElements = new String[numFreeVariables][];
             for (int i = 0; i < numFreeVariables; ++i) { // add RHSplit
                 if (i < eqnLHSplit.length)
-                    nthMoleculeElements[i] = eqnLHSplit[i].split("(?=\\p{Upper})");
+                    nthMoleculeElements[i] = eqnLHSplit[i]
+                            .replaceAll("\\d", "")
+                            .split("(?=\\p{Upper})");
                 else
-                    nthMoleculeElements[i] = eqnRHSplit[i - eqnLHSplit.length].split("(?=\\p{Upper})");
-            }
-
-            for (int i = 0; i < nthMoleculeElements.length; ++i) {
-                for (int j = 0; j < nthMoleculeElements[i].length; ++j) {
-                    nthMoleculeElements[i][j] = nthMoleculeElements[i][j].replaceAll("\\d", "");
-                }
+                    nthMoleculeElements[i] = eqnRHSplit[i - eqnLHSplit.length]
+                            .replaceAll("\\d", "")
+                            .split("(?=\\p{Upper})");
             }
 
             nthMoleculeElementIndex = new int[nthMoleculeElements.length][];
