@@ -177,6 +177,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
+                    view.performClick();
                     layout.requestFocus();
                     imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
                 }
