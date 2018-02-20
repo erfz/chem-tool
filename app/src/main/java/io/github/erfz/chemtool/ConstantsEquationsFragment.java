@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daquexian.flexiblerichtextview.FlexibleRichTextView;
+
+import org.scilab.forge.jlatexmath.core.AjLatexMath;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,7 +68,20 @@ public class ConstantsEquationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_constants_equations, container, false);
+        View v = inflater.inflate(R.layout.fragment_constants_equations, container, false);
+        AjLatexMath.init(getContext());
+        FlexibleRichTextView textView = v.findViewById(R.id.example_text_view);
+        String ex = "$\\begin{array}{|c|l|||r|c|}"
+                + "\\hline"
+                + "\\text{Matrix}&\\multicolumn{2}{|c|}{\\text{Multicolumns}}&\\text{Font sizes commands}\\cr"
+                + "\\hline"
+                + "\\begin{pmatrix}\\alpha_{11}&\\cdots&\\alpha_{1n}\\cr\\hdotsfor{3}\\cr\\alpha_{n1}&\\cdots&\\alpha_{nn}\\end{pmatrix}&\\Large \\text{Large Right}&\\small \\text{small Left}&\\tiny \\text{tiny Tiny}\\cr"
+                + "\\hline"
+                + "\\multicolumn{4}{|c|}{\\Huge \\text{Huge Multicolumns}}\\cr"
+                + "\\hline"
+                + "\\end{array}$";
+        textView.setText(ex);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
