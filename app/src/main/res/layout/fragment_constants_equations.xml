@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:background="@color/backgroundColor">
 
-        <com.daquexian.flexiblerichtextview.FlexibleRichTextView
+        <io.github.sidvenu.mathjaxview.MathJaxView
             android:id="@+id/example_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </com.daquexian.flexiblerichtextview.FlexibleRichTextView>
+        </io.github.sidvenu.mathjaxview.MathJaxView>
 
     </LinearLayout>
 

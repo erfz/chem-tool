@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.daquexian.flexiblerichtextview.FlexibleRichTextView;
-
-import org.scilab.forge.jlatexmath.core.AjLatexMath;
+import io.github.sidvenu.mathjaxview.MathJaxView;
 
 
 /**
@@ -69,17 +67,39 @@ public class ConstantsEquationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_constants_equations, container, false);
-        AjLatexMath.init(getContext());
-        FlexibleRichTextView textView = v.findViewById(R.id.example_text_view);
-        String ex = "$\\begin{array}{|c|l|||r|c|}"
-                + "\\hline"
-                + "\\text{Matrix}&\\multicolumn{2}{|c|}{\\text{Multicolumns}}&\\text{Font sizes commands}\\cr"
-                + "\\hline"
-                + "\\begin{pmatrix}\\alpha_{11}&\\cdots&\\alpha_{1n}\\cr\\hdotsfor{3}\\cr\\alpha_{n1}&\\cdots&\\alpha_{nn}\\end{pmatrix}&\\Large \\text{Large Right}&\\small \\text{small Left}&\\tiny \\text{tiny Tiny}\\cr"
-                + "\\hline"
-                + "\\multicolumn{4}{|c|}{\\Huge \\text{Huge Multicolumns}}\\cr"
-                + "\\hline"
-                + "\\end{array}$";
+        MathJaxView textView = v.findViewById(R.id.example_text_view);
+        String ex = "$$\\begin{align}\n" +
+                "\\dot{x} & = \\sigma(y-x) \\\\\n" +
+                "\\dot{y} & = \\rho x - y - xz \\\\\n" +
+                "\\dot{z} & = -\\beta z + xy\n" +
+                "\\end{align}$$";
+        ex += "$$\\begin{equation*}\n" +
+                "\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)\n" +
+                "\\end{equation*}$$";
+        ex += "$$\\begin{equation*}\n" +
+                "\\mathbf{V}_1 \\times \\mathbf{V}_2 =  \\begin{vmatrix}\n" +
+                "\\mathbf{i} & \\mathbf{j} & \\mathbf{k} \\\\\n" +
+                "\\frac{\\partial X}{\\partial u} &  \\frac{\\partial Y}{\\partial u} & 0 \\\\\n" +
+                "\\frac{\\partial X}{\\partial v} &  \\frac{\\partial Y}{\\partial v} & 0\n" +
+                "\\end{vmatrix}\n" +
+                "\\end{equation*}$$";
+        ex += "$$\\begin{equation*}\n" +
+                "P(E)   = {n \\choose k} p^k (1-p)^{ n-k}\n" +
+                "\\end{equation*}$$";
+        ex += "$$\\begin{equation*}\n" +
+                "\\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} =\n" +
+                "1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}}\n" +
+                "{1+\\frac{e^{-8\\pi}} {1+\\ldots} } } }\n" +
+                "\\end{equation*}$$";
+        ex += "$$\\begin{equation*}\n" +
+                "1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots =\n" +
+                "\\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},\n" +
+                "\\quad\\quad \\text{for $|q|<1$}.\n" +
+                "\\end{equation*}$$";
+        ex += "$$\\begin{align}\n" +
+                "\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac1c\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} & = \\frac{4\\pi}{c}\\vec{\\mathbf{j}} \\\\   \\nabla \\cdot \\vec{\\mathbf{E}} & = 4 \\pi \\rho \\\\\n" +
+                "\\nabla \\times \\vec{\\mathbf{E}}\\, +\\, \\frac1c\\, \\frac{\\partial\\vec{\\mathbf{B}}}{\\partial t} & = \\vec{\\mathbf{0}} \\\\\n" +
+                "\\nabla \\cdot \\vec{\\mathbf{B}} & = 0\\end{align}$$";
         textView.setText(ex);
         return v;
     }
