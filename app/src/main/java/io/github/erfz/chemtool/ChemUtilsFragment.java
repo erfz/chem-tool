@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -23,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -48,7 +48,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private boolean mKeyboardState;
     private boolean buttonStateChange;
 
-    private ConstraintLayout layout;
+    private LinearLayout layout;
     private CoordinatorLayout coordinatorLayout;
     private EditText LHSEqn;
     private EditText RHSEqn;
@@ -151,7 +151,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_chem_utils, container, false);
 
-        layout = (ConstraintLayout) rootView.findViewById(R.id.balance_equation_layout);
+        layout = (LinearLayout) rootView.findViewById(R.id.balance_equation_layout);
         coordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinatorLayout);
         LHSEqn = (EditText) rootView.findViewById(R.id.left_equation_edittext);
         RHSEqn = (EditText) rootView.findViewById(R.id.right_equation_edittext);
@@ -215,7 +215,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        String equation = null;
+        String equation;
         switch (id) {
             case R.id.balance_button:
                 equation = LHSEqn.getText().toString() + "=" + RHSEqn.getText().toString();
