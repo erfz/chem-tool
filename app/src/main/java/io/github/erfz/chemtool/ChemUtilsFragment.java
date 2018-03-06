@@ -228,9 +228,9 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     savedEquation[1] = RHSEqn.getText().toString();
                     LHSEqn.setText("");
                     RHSEqn.setText("");
-                    Snackbar snackbar = Snackbar.make(coordinatorLayout, R.string.snackbar_equation_cleared, Snackbar.LENGTH_LONG);
-                    snackbar.setAction(R.string.snackbar_undo_clear, new UndoClearEquationListener());
-                    snackbar.show();
+                    Snackbar.make(coordinatorLayout, R.string.snackbar_equation_cleared, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.snackbar_undo_clear, new UndoClearEquationListener())
+                            .show();
                     break;
                 }
                 if (!clipboard.hasPrimaryClip()) {
@@ -357,7 +357,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 getActivity().getCurrentFocus().clearFocus();
             }
             EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
-            f.show(getFragmentManager(), "equation dialog");
+            f.show(getChildFragmentManager(), "equation dialog");
         }
     }
 }
