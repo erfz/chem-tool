@@ -56,6 +56,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private Button balanceButton;
     private ClipboardManager clipboard;
     private InputMethodManager imm;
+    private final String chemicalDelimiters = "()[].•⋅·+ ";
     private final TextWatcher eqnTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -69,7 +70,10 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (!LHSEqn.getText().toString().isEmpty() || !RHSEqn.getText().toString().isEmpty()) {
+            String LHSText = LHSEqn.getText().toString();
+            String RHSText = RHSEqn.getText().toString();
+
+            if (!LHSText.isEmpty() || !RHSText.isEmpty()) {
                 pasteClearButton.setText(R.string.clear_button);
                 buttonStateChange = true;
             } else {
@@ -77,8 +81,8 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 buttonStateChange = false;
             }
 
-            if (!LHSEqn.getText().toString().replaceAll("\\s+", "").isEmpty()
-                    && !RHSEqn.getText().toString().replaceAll("\\s+", "").isEmpty()) {
+            if (!LHSText.replaceAll("\\s+", "").isEmpty()
+                    && !RHSText.replaceAll("\\s+", "").isEmpty()) {
                 balanceButton.setEnabled(true);
             } else {
                 balanceButton.setEnabled(false);
@@ -89,11 +93,9 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     String str = s.subSequence(i, i + 1).toString().toUpperCase();
                     s.replace(i, i + 1, str);
                 } else if (i > 0) {
-                    if (Character.isLowerCase(s.charAt(i)) && (s.charAt(i - 1) == '(' || s.charAt(i - 1) == ')'
-                            || s.charAt(i - 1) == '[' || s.charAt(i - 1) == ']' || s.charAt(i - 1) == '.'
-                            || s.charAt(i - 1) == '•' || s.charAt(i - 1) == '⋅' || s.charAt(i - 1) == '·'
-                            || s.charAt(i - 1) == ' ' || s.charAt(i - 1) == '+'
-                            || Character.isLowerCase(s.charAt(i - 1)) || Character.isDigit(s.charAt(i - 1)))) {
+                    char c = s.charAt(i - 1);
+                    if (Character.isLowerCase(s.charAt(i)) && (chemicalDelimiters.indexOf(c) != -1
+                            || Character.isLowerCase(c) || Character.isDigit(c))) {
                         String str = s.subSequence(i, i + 1).toString().toUpperCase();
                         s.replace(i, i + 1, str);
                     }
@@ -232,7 +234,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     snackbar.show();
                     break;
                 }
-                if (!(clipboard.hasPrimaryClip())) {
+                if (!clipboard.hasPrimaryClip()) {
                     Snackbar.make(coordinatorLayout, R.string.snackbar_clipboard_no_text, Snackbar.LENGTH_SHORT).show();
                 } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
                         clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
