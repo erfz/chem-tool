@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:clipToPadding="false"
+        android:orientation="vertical"
         android:paddingBottom="16dp"
         android:paddingTop="16dp">
 
@@ -20,10 +20,8 @@
             android:id="@+id/left_equation_hint_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginRight="8dp">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/left_equation_edittext"
@@ -41,10 +39,8 @@
             android:id="@+id/right_equation_hint_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginRight="8dp">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/right_equation_edittext"
@@ -62,8 +58,8 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="100dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
             android:layout_marginTop="16dp"
             android:text="@string/equation_paste_button"
             android:theme="@style/EquationInput.Button" />
@@ -73,8 +69,8 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="100dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
             android:text="@string/balance_button"
             android:theme="@style/Balance.Button" />
 
