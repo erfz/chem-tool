@@ -324,13 +324,9 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         }
 
         @Override
-        public void onStart() {
-            super.onStart();
-
-            Dialog dialog = getDialog();
-            if (dialog != null) {
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            }
+        public void onResume() {
+            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            super.onResume();
         }
     }
 
