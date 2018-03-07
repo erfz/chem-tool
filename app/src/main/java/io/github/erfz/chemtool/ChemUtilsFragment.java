@@ -1,6 +1,5 @@
 package io.github.erfz.chemtool;
 
-import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
@@ -22,8 +21,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnTouch;
+import butterknife.Unbinder;
 
 
 /**
@@ -40,6 +43,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_KEYBOARD_STATE = "keyboard_state";
+    private static final String CHEMICAL_DELIMITERS = "()[].•⋅·+ ";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -48,15 +52,30 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private boolean mKeyboardState;
     private boolean buttonStateChange;
 
-    private LinearLayout layout;
-    private CoordinatorLayout coordinatorLayout;
-    private EditText LHSEqn;
-    private EditText RHSEqn;
-    private Button pasteClearButton;
-    private Button balanceButton;
     private ClipboardManager clipboard;
     private InputMethodManager imm;
-    private final String chemicalDelimiters = "()[].•⋅·+ ";
+    private Unbinder unbinder;
+
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.left_equation_et)
+    EditText LHSEqn;
+    @BindView(R.id.right_equation_et)
+    EditText RHSEqn;
+    @BindView(R.id.paste_clear_button)
+    Button pasteClearButton;
+    @BindView(R.id.balance_button)
+    Button balanceButton;
+
+    @OnTouch(R.id.chem_utils_layout)
+    public boolean onTouch(View view, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            view.requestFocus();
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        return true;
+    }
+
     private final TextWatcher eqnTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -94,7 +113,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     s.replace(i, i + 1, str);
                 } else if (i > 0) {
                     char c = s.charAt(i - 1);
-                    if (Character.isLowerCase(s.charAt(i)) && (chemicalDelimiters.indexOf(c) != -1
+                    if (Character.isLowerCase(s.charAt(i)) && (CHEMICAL_DELIMITERS.indexOf(c) != -1
                             || Character.isLowerCase(c) || Character.isDigit(c))) {
                         String str = s.subSequence(i, i + 1).toString().toUpperCase();
                         s.replace(i, i + 1, str);
@@ -143,7 +162,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        boolean keyboardState = imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
+        boolean keyboardState = imm.hideSoftInputFromWindow(coordinatorLayout.getWindowToken(), 0);
         outState.putBoolean(ARG_KEYBOARD_STATE, keyboardState);
     }
 
@@ -151,42 +170,30 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_chem_utils, container, false);
+        View view = inflater.inflate(R.layout.fragment_chem_utils, container, false);
+        unbinder = ButterKnife.bind(this, view);
 
-        layout = (LinearLayout) rootView.findViewById(R.id.balance_equation_layout);
-        coordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinatorLayout);
-        LHSEqn = (EditText) rootView.findViewById(R.id.left_equation_edittext);
-        RHSEqn = (EditText) rootView.findViewById(R.id.right_equation_edittext);
-        pasteClearButton = (Button) rootView.findViewById(R.id.paste_clear_button);
-        balanceButton = (Button) rootView.findViewById(R.id.balance_button);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        buttonStateChange = false;
-
-        balanceButton.setOnClickListener(this);
-        pasteClearButton.setOnClickListener(this);
-
-        balanceButton.setEnabled(false);
 
         if (mKeyboardState) {
             imm.showSoftInput(getActivity().getCurrentFocus(), InputMethodManager.SHOW_FORCED);
         }
+
+        buttonStateChange = false;
+        balanceButton.setEnabled(false);
+        balanceButton.setOnClickListener(this);
+        pasteClearButton.setOnClickListener(this);
         LHSEqn.addTextChangedListener(eqnTextWatcher);
         RHSEqn.addTextChangedListener(eqnTextWatcher);
 
-        layout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    layout.requestFocus();
-                    imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
-                }
-                return true;
-            }
-        });
+        return view;
+    }
 
-        return rootView;
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

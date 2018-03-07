@@ -10,7 +10,7 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/balance_equation_layout"
+            android:id="@+id/chem_utils_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundColor"
