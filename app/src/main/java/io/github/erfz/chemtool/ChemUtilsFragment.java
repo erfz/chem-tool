@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -56,8 +55,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private InputMethodManager imm;
     private Unbinder unbinder;
 
-    @BindView(R.id.coordinatorLayout)
-    CoordinatorLayout coordinatorLayout;
     @BindView(R.id.left_equation_et)
     EditText LHSEqn;
     @BindView(R.id.right_equation_et)
@@ -162,7 +159,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        boolean keyboardState = imm.hideSoftInputFromWindow(coordinatorLayout.getWindowToken(), 0);
+        boolean keyboardState = imm.hideSoftInputFromWindow(getActivity().findViewById(android.R.id.content).getWindowToken(), 0);
         outState.putBoolean(ARG_KEYBOARD_STATE, keyboardState);
     }
 
@@ -235,16 +232,16 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     savedEquation[1] = RHSEqn.getText().toString();
                     LHSEqn.setText("");
                     RHSEqn.setText("");
-                    Snackbar.make(coordinatorLayout, R.string.snackbar_equation_cleared, Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, R.string.snackbar_equation_cleared, Snackbar.LENGTH_LONG)
                             .setAction(R.string.snackbar_undo_clear, new UndoClearEquationListener())
                             .show();
                     break;
                 }
                 if (!clipboard.hasPrimaryClip()) {
-                    Snackbar.make(coordinatorLayout, R.string.snackbar_clipboard_no_text, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, R.string.snackbar_clipboard_no_text, Snackbar.LENGTH_SHORT).show();
                 } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
                         clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
-                    Snackbar.make(coordinatorLayout, R.string.snackbar_clipboard_no_parseable_text, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, R.string.snackbar_clipboard_no_parseable_text, Snackbar.LENGTH_SHORT).show();
                 } else {
                     ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
                     equation = item.coerceToText(getActivity()).toString();
@@ -253,7 +250,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                             .replaceAll("=+", "=");
                     String[] eqnHS = equation.split("=");
                     if (eqnHS.length != 2) {
-                        Snackbar.make(coordinatorLayout, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
                         return;
                     }
                     LHSEqn.setText(eqnHS[0].trim());
@@ -353,7 +350,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         @Override
         protected void onPostExecute(String equation) {
             if (equation == null) {
-                Snackbar.make(coordinatorLayout, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getActivity().findViewById(R.id.coordinatorLayout), R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
                 return;
             }
             if (getActivity().getCurrentFocus() != null) {
