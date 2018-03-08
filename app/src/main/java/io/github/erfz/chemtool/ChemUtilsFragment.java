@@ -9,8 +9,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -285,7 +285,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         void onFragmentInteraction(Uri uri);
     }
 
-    public static class EquationDialogFragment extends DialogFragment {
+    public static class EquationDialogFragment extends AppCompatDialogFragment {
         private String mEquation;
 
         public static EquationDialogFragment newInstance(String equation) {
