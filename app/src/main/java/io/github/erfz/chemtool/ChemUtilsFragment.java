@@ -285,55 +285,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         void onFragmentInteraction(Uri uri);
     }
 
-    public static class EquationDialogFragment extends AppCompatDialogFragment {
-        private String mEquation;
-
-        public static EquationDialogFragment newInstance(String equation) {
-            EquationDialogFragment fragment = new EquationDialogFragment();
-            Bundle args = new Bundle();
-            args.putString("equation", equation);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            mEquation = getArguments().getString("equation");
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.dialog_fragment_equation, container, false);
-
-            TextView equationtv = (TextView) v.findViewById(R.id.balanced_equation);
-            equationtv.setText(mEquation);
-            equationtv.setTextIsSelectable(true);
-            equationtv.setTextColor(Color.BLACK);
-
-            Button copyButton = (Button) v.findViewById(R.id.copy_button);
-            copyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ClipboardManager clipboard = (ClipboardManager) getActivity()
-                            .getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("equation", mEquation);
-                    clipboard.setPrimaryClip(clip);
-                    Snackbar.make(getActivity().findViewById(R.id.coordinatorLayout), R.string.snackbar_equation_copied, Snackbar.LENGTH_SHORT).show();
-                }
-            });
-
-            return v;
-        }
-
-        @Override
-        public void onResume() {
-            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            super.onResume();
-        }
-    }
-
     private class BalanceEquationTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
