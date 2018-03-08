@@ -14,14 +14,14 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingBottom="16dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:paddingTop="16dp">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/left_equation_hint_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp">
+            android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/left_equation_et"
@@ -38,9 +38,7 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/right_equation_hint_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp">
+            android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/right_equation_et"
@@ -58,8 +56,8 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
+            android:layout_marginLeft="88dp"
+            android:layout_marginRight="88dp"
             android:layout_marginTop="16dp"
             android:text="@string/equation_paste_button"
             android:theme="@style/EquationInput.Button" />
@@ -69,8 +67,8 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
+            android:layout_marginLeft="88dp"
+            android:layout_marginRight="88dp"
             android:text="@string/balance_button"
             android:theme="@style/Balance.Button" />
 

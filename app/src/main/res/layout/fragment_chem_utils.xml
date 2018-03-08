@@ -16,7 +16,8 @@
             android:background="@color/backgroundColor"
             android:clickable="true"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
             <include layout="@layout/equation_balance_cardview" />
 
