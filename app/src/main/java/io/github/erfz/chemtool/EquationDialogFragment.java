@@ -37,7 +37,7 @@ public class EquationDialogFragment extends AppCompatDialogFragment {
                 .getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("equation", mEquation);
         clipboard.setPrimaryClip(clip);
-        Snackbar.make(getActivity().findViewById(R.id.coordinatorLayout),
+        Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
                 R.string.snackbar_equation_copied, Snackbar.LENGTH_SHORT).show();
     }
 

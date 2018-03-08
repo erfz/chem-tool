@@ -298,7 +298,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         @Override
         protected void onPostExecute(String equation) {
             if (equation == null) {
-                Snackbar.make(getActivity().findViewById(R.id.coordinatorLayout), R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getActivity().findViewById(R.id.coordinator_layout), R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
                 return;
             }
             if (getActivity().getCurrentFocus() != null) {
