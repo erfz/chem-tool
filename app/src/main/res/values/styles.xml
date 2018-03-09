@@ -22,7 +22,6 @@
     <style name="Balance.Button" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:disabledAlpha">.4</item>
-        <item name="colorControlHighlight">#42000000</item>
     </style>
 
 </resources>
