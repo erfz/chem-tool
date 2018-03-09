@@ -16,12 +16,13 @@
 
     <style name="EquationInput.Button" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">#546e7a</item>
-        <item name="colorControlHighlight">#42000000</item>
+        <item name="colorControlHighlight">#33FFFFFF</item>
     </style>
 
     <style name="Balance.Button" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:disabledAlpha">.4</item>
+        <item name="colorControlHighlight">#40000000</item>
     </style>
 
 </resources>
