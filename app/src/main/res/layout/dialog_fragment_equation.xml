@@ -3,14 +3,15 @@
     android:id="@+id/dialog_fragment_equation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
 
     <HorizontalScrollView
         android:id="@+id/horizontal_scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="16dp">
 
         <TextView
@@ -24,11 +25,9 @@
     <Button
         android:id="@+id/copy_button"
         style="@style/Base.Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/button_default_width"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
         android:layout_marginTop="8dp"
         android:text="@string/copy_button"
         android:theme="@style/EquationInput.Button" />
