@@ -24,48 +24,25 @@ import butterknife.ButterKnife;
 import butterknife.OnTouch;
 import butterknife.Unbinder;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ChemUtilsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ChemUtilsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ChemUtilsFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_KEYBOARD_STATE = "keyboard_state";
     private static final String CHEMICAL_DELIMITERS = "()[].•⋅·+ ";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Unbinder unbinder;
+    private OnFragmentInteractionListener mListener;
     private String[] savedEquation = new String[2];
-    private boolean mKeyboardState;
     private boolean buttonStateChange;
 
-    private ClipboardManager clipboard;
-    private InputMethodManager imm;
-    private Unbinder unbinder;
-
-    @BindView(R.id.left_equation_et)
-    EditText LHSEqn;
-    @BindView(R.id.right_equation_et)
-    EditText RHSEqn;
-    @BindView(R.id.paste_clear_button)
-    Button pasteClearButton;
-    @BindView(R.id.balance_button)
-    Button balanceButton;
+    @BindView(R.id.left_equation_et) EditText LHSEqn;
+    @BindView(R.id.right_equation_et) EditText RHSEqn;
+    @BindView(R.id.paste_clear_button) Button pasteClearButton;
+    @BindView(R.id.balance_button) Button balanceButton;
 
     @OnTouch(R.id.chem_utils_layout)
     public boolean onTouch(View view, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             view.requestFocus();
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         return true;
     }
@@ -117,62 +94,12 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         }
     };
 
-    private OnFragmentInteractionListener mListener;
-
-    public ChemUtilsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChemUtilsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChemUtilsFragment newInstance(String param1, String param2) {
-        ChemUtilsFragment fragment = new ChemUtilsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        if (savedInstanceState != null) {
-            mKeyboardState = savedInstanceState.getBoolean(ARG_KEYBOARD_STATE, false);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        boolean keyboardState = imm.hideSoftInputFromWindow(getActivity().findViewById(android.R.id.content).getWindowToken(), 0);
-        outState.putBoolean(ARG_KEYBOARD_STATE, keyboardState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chem_utils, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-        clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if (mKeyboardState) {
-            imm.showSoftInput(getActivity().getCurrentFocus(), InputMethodManager.SHOW_FORCED);
-        }
 
         buttonStateChange = false;
         balanceButton.setEnabled(false);
@@ -233,29 +160,31 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                             .setAction(R.string.snackbar_undo_clear, new UndoClearEquationListener())
                             .show();
                     break;
-                }
-                if (!clipboard.hasPrimaryClip()) {
-                    Snackbar.make(view, R.string.snackbar_clipboard_no_text, Snackbar.LENGTH_SHORT).show();
-                } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
-                        clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
-                    Snackbar.make(view, R.string.snackbar_clipboard_no_parseable_text, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                    equation = item.coerceToText(getActivity()).toString();
-                    equation = equation.replaceAll("-+|<+|>+|→+|←+|↔+|⇄+|⇌+", "=")
-                            .replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=.•⋅· ]", "")
-                            .replaceAll("=+", "=");
-                    String[] eqnHS = equation.split("=");
-                    if (eqnHS.length != 2) {
-                        Snackbar.make(view, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
-                        return;
+                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (!clipboard.hasPrimaryClip()) {
+                        Snackbar.make(view, R.string.snackbar_clipboard_no_text, Snackbar.LENGTH_SHORT).show();
+                    } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
+                            clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML))) {
+                        Snackbar.make(view, R.string.snackbar_clipboard_no_parseable_text, Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                        equation = item.coerceToText(getActivity()).toString();
+                        equation = equation.replaceAll("-+|<+|>+|→+|←+|↔+|⇄+|⇌+", "=")
+                                .replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=.•⋅· ]", "")
+                                .replaceAll("=+", "=");
+                        String[] eqnHS = equation.split("=");
+                        if (eqnHS.length != 2) {
+                            Snackbar.make(view, R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
+                            return;
+                        }
+                        LHSEqn.setText(eqnHS[0].trim());
+                        RHSEqn.setText(eqnHS[1].trim());
+                        LHSEqn.setSelection(LHSEqn.length());
+                        RHSEqn.setSelection(RHSEqn.length());
                     }
-                    LHSEqn.setText(eqnHS[0].trim());
-                    RHSEqn.setText(eqnHS[1].trim());
-                    LHSEqn.setSelection(LHSEqn.length());
-                    RHSEqn.setSelection(RHSEqn.length());
+                    break;
                 }
-                break;
         }
     }
 
@@ -267,18 +196,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
