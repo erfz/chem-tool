@@ -7,6 +7,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -41,7 +42,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     public boolean onTouch(View view, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             view.requestFocus();
-            ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE))
+            ((InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                     .hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         return true;
@@ -95,7 +96,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chem_utils, container, false);
@@ -152,16 +153,18 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.paste_clear_button:
                 if (buttonStateChange) {
-                    savedEquation[0] = LHSEqn.getText().toString();
-                    savedEquation[1] = RHSEqn.getText().toString();
-                    LHSEqn.setText("");
-                    RHSEqn.setText("");
+                    Editable LHSEditable = LHSEqn.getText();
+                    Editable RHSEditable = RHSEqn.getText();
+                    savedEquation[0] = LHSEditable.toString();
+                    savedEquation[1] = RHSEditable.toString();
+                    LHSEditable.clear();
+                    RHSEditable.clear();
                     Snackbar.make(view, R.string.snackbar_equation_cleared, Snackbar.LENGTH_LONG)
                             .setAction(R.string.snackbar_undo_clear, new UndoClearEquationListener())
                             .show();
                     break;
                 } else {
-                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
                     if (!clipboard.hasPrimaryClip()) {
                         Snackbar.make(view, R.string.snackbar_clipboard_no_text, Snackbar.LENGTH_SHORT).show();
                     } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ||
@@ -169,7 +172,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                         Snackbar.make(view, R.string.snackbar_clipboard_no_parseable_text, Snackbar.LENGTH_SHORT).show();
                     } else {
                         ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                        equation = item.coerceToText(getActivity()).toString();
+                        equation = item.coerceToText(getContext()).toString();
                         equation = equation.replaceAll("-+|<+|>+|→+|←+|↔+|⇄+|⇌+", "=")
                                 .replaceAll("[^A-Za-z0-9\\+\\(\\)\\[\\]=.•⋅· ]", "")
                                 .replaceAll("=+", "=");
@@ -219,8 +222,9 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 Snackbar.make(getActivity().findViewById(R.id.coordinator_layout), R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
                 return;
             }
-            if (getActivity().getCurrentFocus() != null) {
-                getActivity().getCurrentFocus().clearFocus();
+            View v = getActivity().getCurrentFocus();
+            if (v != null) {
+                v.clearFocus();
             }
             EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
             f.show(getChildFragmentManager(), "equation dialog");
