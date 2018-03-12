@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -26,14 +27,12 @@ public class EquationDialogFragment extends AppCompatDialogFragment {
     private String mEquation;
     private Unbinder unbinder;
 
-    @BindView(R.id.balanced_equation_tv)
-    TextView equationtv;
-    @BindView(R.id.copy_button)
-    Button copyButton;
+    @BindView(R.id.balanced_equation_tv) TextView equationtv;
+    @BindView(R.id.copy_button) Button copyButton;
 
     @OnClick(R.id.copy_button)
     public void onClick(View view) {
-        ClipboardManager clipboard = (ClipboardManager) getActivity()
+        ClipboardManager clipboard = (ClipboardManager) getContext()
                 .getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("equation", mEquation);
         clipboard.setPrimaryClip(clip);
@@ -56,7 +55,7 @@ public class EquationDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_equation, container, false);
         unbinder = ButterKnife.bind(this, view);
