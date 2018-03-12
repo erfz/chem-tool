@@ -31,7 +31,7 @@
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅· "
                 android:hint="@string/LHSEqnHint"
                 android:imeOptions="actionNext"
-                android:inputType="textNoSuggestions|textVisiblePassword"
+                android:inputType="textVisiblePassword"
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅· "
                 android:hint="@string/RHSEqnHint"
-                android:inputType="textNoSuggestions|textVisiblePassword"
+                android:inputType="textVisiblePassword"
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
