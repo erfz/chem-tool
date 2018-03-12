@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
+    app:cardElevation="3dp"
     tools:context=".MainActivity"
     tools:showIn="@layout/fragment_chem_utils">
 
