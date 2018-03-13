@@ -32,6 +32,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     private OnFragmentInteractionListener mListener;
     private String[] savedEquation = new String[2];
     private boolean buttonStateChange;
+    private boolean ignoreIteration;
 
     @BindView(R.id.left_equation_et) EditText LHSEqn;
     @BindView(R.id.right_equation_et) EditText RHSEqn;
@@ -56,15 +57,12 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // nothing
-        }
+            if (ignoreIteration) return;
 
-        @Override
-        public void afterTextChanged(Editable s) {
-            String LHSText = LHSEqn.getText().toString();
-            String RHSText = RHSEqn.getText().toString();
+            boolean LHSIsEmpty = LHSEqn.getText().toString().isEmpty();
+            boolean RHSIsEmpty = RHSEqn.getText().toString().isEmpty();
 
-            if (!LHSText.isEmpty() || !RHSText.isEmpty()) {
+            if (!LHSIsEmpty || !RHSIsEmpty) {
                 pasteClearButton.setText(R.string.clear_button);
                 buttonStateChange = true;
             } else {
@@ -72,12 +70,17 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 buttonStateChange = false;
             }
 
-            if (!LHSText.replaceAll("\\s+", "").isEmpty()
-                    && !RHSText.replaceAll("\\s+", "").isEmpty()) {
+            if (!LHSIsEmpty && !RHSIsEmpty) {
                 balanceButton.setEnabled(true);
             } else {
                 balanceButton.setEnabled(false);
             }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (ignoreIteration) return;
+            ignoreIteration = true;
 
             for (int i = 0; i < s.length(); ++i) {
                 if (i == 0 && Character.isLowerCase(s.charAt(i))) {
@@ -92,6 +95,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     }
                 }
             }
+            ignoreIteration = false;
         }
     };
 
