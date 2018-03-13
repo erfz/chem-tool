@@ -14,10 +14,8 @@ public class MainActivity extends AppCompatActivity implements
         ChemUtilsFragment.OnFragmentInteractionListener,
         ConstantsEquationsFragment.OnFragmentInteractionListener {
     MainPagerAdapter pagerAdapter;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
+    @BindView(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.tab_layout) TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
