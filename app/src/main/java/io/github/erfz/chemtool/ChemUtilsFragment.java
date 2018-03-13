@@ -95,6 +95,7 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                     }
                 }
             }
+
             ignoreIteration = false;
         }
     };
