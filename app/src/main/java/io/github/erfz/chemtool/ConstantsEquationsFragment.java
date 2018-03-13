@@ -92,7 +92,26 @@ public class ConstantsEquationsFragment extends Fragment {
                 "$$\\textrm{1 amu} = \\pu{ 1.660538E-27 kg }$$" +
                 "$$k_e = \\pu{ 8.987551E9 N m2 C-2 }$$" +
                 "$$k_b = \\pu{ 1.38065E-23 J K-1 }$$" +
-                "$$R_\\infty = \\pu{ 1.0973731568539E7 m-1}$$";
+                "$$R_\\infty = \\pu{ 1.0973731568539E7 m-1}$$" +
+                "$$\\textrm{Molarity} = \\frac{\\textrm{moles of solute}}{\\textrm{volume of solution}}$$" +
+                "$$\\textrm{Molality} = \\frac{\\textrm{moles of solute}}{\\textrm{mass of solvent in kg}}$$" +
+                "$$\\textrm{Rate of Reaction} = \\frac{\\Delta \\textrm{concentration}}{\\Delta \\textrm{time}}$$" +
+                "$$\\lambda = \\frac{h}{mv}$$" +
+                "$$E = hv$$" +
+                "$$c = \\lambda v$$" +
+                "$$F_e = k_e \\frac{Q_1 Q_2}{r^2}$$" +
+                "$$P_\\textrm{solution} = P_1 \\chi_1 + P_2 \\chi_2 + ...$$" +
+                "$$\\Delta T_\\textrm{solution} = K_b m_\\textrm{solute}$$" +
+                "$$\\Delta T_\\textrm{solution} = K_f m_\\textrm{solute}$$" +
+                "$$PV = nRT$$" +
+                "$$pH = -log[H^+]$$" +
+                "$$pOH = -log[OH^-]$$" +
+                "$$K_p = K_c(RT)^{\\Delta n}$$" +
+                "$$\\textrm{For }aA + bB \\rightarrow cC + dD\\colon \\\\ K_{\\textrm{eq}} = \\frac{[C]^c [D]^d}{[A]^a [B]^b}$$" +
+                "$$q = mc\\Delta T$$" +
+                "$$\\Delta H = H_{\\textrm{products}} - H_{\\textrm{reactants}}$$" +
+                "$$\\Delta S = S_{\\textrm{products}} - S_{\\textrm{reactants}}$$" +
+                "$$\\Delta G = \\Delta H - T\\Delta S$$";
         textView.setText(ex);
         return v;
     }
