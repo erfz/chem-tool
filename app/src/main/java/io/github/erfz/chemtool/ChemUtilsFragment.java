@@ -151,15 +151,15 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
     public void onClick(View view) {
         int id = view.getId();
         String equation;
+        Editable LHSEditable = LHSEqn.getText();
+        Editable RHSEditable = RHSEqn.getText();
         switch (id) {
             case R.id.balance_button:
-                equation = LHSEqn.getText().toString() + "=" + RHSEqn.getText().toString();
+                equation = LHSEditable.toString() + "=" + RHSEditable.toString();
                 new BalanceEquationTask().execute(equation);
                 break;
             case R.id.paste_clear_button:
                 if (buttonStateChange) {
-                    Editable LHSEditable = LHSEqn.getText();
-                    Editable RHSEditable = RHSEqn.getText();
                     savedEquation[0] = LHSEditable.toString();
                     savedEquation[1] = RHSEditable.toString();
                     LHSEditable.clear();
