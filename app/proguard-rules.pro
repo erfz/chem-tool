@@ -15,3 +15,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-dontwarn com.x5.**
+-keep class com.x5.template.** { *; }
+-keep class com.x5.util.** { *; }
