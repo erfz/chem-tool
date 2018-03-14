@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground">
+        android:background="@color/colorBackground"
+        android:clipToPadding="false"
+        android:padding="10dp">
 
-        <io.github.kexanie.library.MathView
-            android:id="@+id/constants_mathview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="false"
-            app:engine="MathJax">
+        <include layout="@layout/constants_equations_cardview" />
 
-        </io.github.kexanie.library.MathView>
-
-    </LinearLayout>
+    </FrameLayout>
 
 </android.support.v4.widget.NestedScrollView>
