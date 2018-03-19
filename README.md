@@ -1,6 +1,6 @@
 # ChemTool
-Made by Jason Guo
-MIT License
+- Made by Jason Guo
+- MIT License
 
 # Libraries used
 Kexanie's MathView (https://github.com/kexanie/MathView)
