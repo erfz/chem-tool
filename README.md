@@ -9,6 +9,7 @@ Kexanie's MathView (https://github.com/kexanie/MathView)
 - Changes made:
     * SVG output for MathJax
     * Updated with latest MathJax and KaTeX assets
+
 # To-do
 - More specific snackbar messages
 - Stoichi. (molecules alone and reaction calculations)
