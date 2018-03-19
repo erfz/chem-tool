@@ -22,8 +22,6 @@ public class ConstantsEquationsFragment extends Fragment {
         MathView mathView = v.findViewById(R.id.mathview);
         mathView.config(
                 "MathJax.Hub.Config({\n" +
-                        "   CommonHTML: { linebreaks: { automatic: true } },\n" +
-                        "   \"HTML-CSS\": { linebreaks: { automatic: true } },\n" +
                         "   SVG: { linebreaks: { automatic: true } },\n" +
                         "   TeX: { extensions: [\"file:///android_asset/MathJax/extensions/TeX/mhchem.js\"] }\n" +
                         "});");
@@ -34,11 +32,11 @@ public class ConstantsEquationsFragment extends Fragment {
                 "$$\\begin{align}\n" +
                 "R & = \\pu{ 8.314 J//mol K } \\\\\n" +
                 "& = \\pu{ 0.08206 L atm//mol K } \\\\\n" +
-                "& = \\pu{ 62.36 L torr//mol K }\n" +
+                "& = \\pu{ 62.36 L Torr//mol K }\n" +
                 "\\end{align}$$\n" +
                 "$$\\begin{align}\n" +
                 "\\pu{1 atm} & = \\pu{ 760 mm Hg } \\\\\n" +
-                "& = \\pu{ 760 torr }\n" +
+                "& = \\pu{ 760 Torr }\n" +
                 "\\end{align}$$\n" +
                 "$$F = \\pu{ 96,485 C//mol e^- }$$" +
                 "$$\\textrm{1 amu} = \\pu{ 1.660538E-27 kg }$$" +
