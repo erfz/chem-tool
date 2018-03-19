@@ -1,12 +1,18 @@
 # ChemTool
 Made by Jason Guo
+MIT License
+
+# Libraries used
+Kexanie's MathView (https://github.com/kexanie/MathView)
+- APLv2 License
+    * For full license details, refer to the license file in the library's directory
+- Changes made:
+    * SVG output for MathJax
+    * Updated with latest MathJax and KaTeX assets
 # To-do
-- Show specific snackbars for different exception scenarios (put ID in construtor?)
-- Override ContextMenu paste()
+- More specific snackbar messages
 - Stoichi. (molecules alone and reaction calculations)
-- Add more drawables
 - Add periodic table
-- Put Balance and Stoichi. widgets in Fragments
 - Side-by-side widget positioning in landscape orientation (need fragments working)
 - Real log calls
 - AppBarLayout
