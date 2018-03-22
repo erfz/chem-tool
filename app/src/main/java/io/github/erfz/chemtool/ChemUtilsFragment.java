@@ -227,10 +227,6 @@ public class ChemUtilsFragment extends Fragment implements View.OnClickListener 
                 Snackbar.make(getActivity().findViewById(R.id.coordinator_layout), R.string.snackbar_invalid_equation, Snackbar.LENGTH_SHORT).show();
                 return;
             }
-            View v = getActivity().getCurrentFocus();
-            if (v != null) {
-                v.clearFocus();
-            }
             EquationDialogFragment f = EquationDialogFragment.newInstance(equation);
             f.show(getChildFragmentManager(), "equation dialog");
         }
