@@ -3,23 +3,16 @@ package io.github.erfz.chemtool;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import io.github.kexanie.library.MathView;
 
-public class ConstantsEquationsFragment extends Fragment {
+public class ConstantsEquationsFragment extends BaseViewStubFragment {
     private OnFragmentInteractionListener mListener;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_constants_equations, container, false);
-        MathView mathView = v.findViewById(R.id.mathview);
+    protected void onCreateViewAfterViewStubInflated(View inflatedView, Bundle savedInstanceState) {
+        MathView mathView = inflatedView.findViewById(R.id.mathview);
         mathView.config(
                 "MathJax.Hub.Config({\n" +
                         "   SVG: { linebreaks: { automatic: true } },\n" +
@@ -63,7 +56,11 @@ public class ConstantsEquationsFragment extends Fragment {
                 "$$\\Delta S = S_{\\textrm{products}} - S_{\\textrm{reactants}}$$" +
                 "$$\\Delta G = \\Delta H - T\\Delta S$$";
         mathView.setText(ex);
-        return v;
+    }
+
+    @Override
+    protected int getViewStubLayoutResource() {
+        return R.layout.fragment_constants_equations;
     }
 
     public void onButtonPressed(Uri uri) {
