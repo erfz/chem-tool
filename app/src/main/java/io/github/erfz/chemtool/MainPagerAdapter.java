@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
     private Context context;
+    private static final int NUM_ITEMS = 2;
 
     public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -19,7 +20,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch(position) {
+        switch (position) {
             case 0:
                 return new ChemUtilsFragment();
             case 1:
@@ -31,12 +32,12 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return NUM_ITEMS;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch(position) {
+        switch (position) {
             case 0:
                 return context.getResources().getString(
                         R.string.balance_page_title);
