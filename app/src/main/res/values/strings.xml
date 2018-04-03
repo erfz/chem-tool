@@ -17,4 +17,138 @@
     <string name="snackbar_clipboard_no_parseable_text">Clipboard doesn\'t contain usable text!</string>
     <string name="snackbar_undo_clear">Undo</string>
     <string name="snackbar_equation_copied">Equation Copied</string>
+    <string-array name="constants_array">
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+        <item>Planck\'s constant</item>
+        <item>Speed of light</item>
+        <item>Avogadro\'s number</item>
+        <item>Elementary charge</item>
+        <item>Gas constant</item>
+        <item>Pressure conversions</item>
+        <item>Faraday constant</item>
+        <item>Atomic mass unit conversion</item>
+        <item>Coulomb\'s constant</item>
+        <item>Boltzmann constant</item>
+        <item>Rydberg constant</item>
+    </string-array>
 </resources>

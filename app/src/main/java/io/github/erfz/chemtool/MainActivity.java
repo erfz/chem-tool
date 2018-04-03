@@ -15,7 +15,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
         ChemUtilsFragment.OnFragmentInteractionListener,
-        ConstantsEquationsFragment.OnFragmentInteractionListener {
+        ConstantsEquationsFragment.OnFragmentInteractionListener,
+        ConstantsListFragment.OnFragmentInteractionListener {
     private static final int NUM_ITEMS = 2;
     MainFragmentPagerAdapter pagerAdapter;
     @BindView(R.id.view_pager) ViewPager viewPager;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements
                 case 0:
                     return new ChemUtilsFragment();
                 case 1:
-                    return new ConstantsEquationsFragment();
+                    return new ConstantsListFragment();
                 default:
                     return null;
             }

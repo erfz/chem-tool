@@ -6,4 +6,5 @@
     <color name="colorText">#FFFFFF</color>
     <color name="colorBackground">#F2F2F2</color>
     <color name="colorTabUnselected">#80FFFFFF</color>
+    <color name="colorTextOnBackground">#000000</color>
 </resources>
