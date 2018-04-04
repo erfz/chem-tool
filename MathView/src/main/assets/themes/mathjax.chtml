@@ -5,6 +5,8 @@
         <script type="text/x-mathjax-config">
             MathJax.Hub.Config({
                 messageStyle: 'none',
+                SVG: { linebreaks: { automatic: true } },
+                TeX: { extensions: ["file:///android_asset/MathJax/extensions/TeX/mhchem.js"] },
                 tex2jax: {preview: 'none'}
             });
         </script>
