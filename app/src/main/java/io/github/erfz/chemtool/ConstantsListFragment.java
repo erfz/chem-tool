@@ -31,6 +31,15 @@ public class ConstantsListFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(
                 mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
+        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        // do it
+                    }
+                }
+        );
+
         return v;
     }
 
