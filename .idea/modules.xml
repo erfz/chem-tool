@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MathView/MathView.iml" filepath="$PROJECT_DIR$/MathView/MathView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlexibleRichTextView/FlexibleRichTextView.iml" filepath="$PROJECT_DIR$/FlexibleRichTextView/FlexibleRichTextView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/chem-tool.iml" filepath="$PROJECT_DIR$/chem-tool.iml" />
     </modules>

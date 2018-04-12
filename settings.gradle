@@ -1,1 +1,1 @@
-include ':app', ':MathView'
+include ':app', ':FlexibleRichTextView'

@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
         ChemUtilsFragment.OnFragmentInteractionListener,
-        ConstantsEquationsFragment.OnFragmentInteractionListener,
         ConstantsListFragment.OnFragmentInteractionListener {
     private static final int NUM_ITEMS = 2;
     MainFragmentPagerAdapter pagerAdapter;

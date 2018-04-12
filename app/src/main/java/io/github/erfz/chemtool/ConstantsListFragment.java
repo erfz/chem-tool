@@ -11,12 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.daquexian.flexiblerichtextview.FlexibleRichTextView;
+
+import org.scilab.forge.jlatexmath.core.AjLatexMath;
 
 public class ConstantsListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private static final String tex = "$$\\Huge h = 6.626\\,070\\,040(81)\\times{10^{-34}} \\text{ J s}$$";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -31,11 +38,20 @@ public class ConstantsListFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(
                 mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
+        AjLatexMath.init(requireContext());
+
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        // do it
+                        MaterialDialog dialog = new MaterialDialog.Builder(requireContext())
+                                .title(((TextView) v).getText().toString())
+                                .customView(R.layout.dialog_fragment_tex, false)
+                                .positiveText("Close")
+                                .build();
+                        FlexibleRichTextView texView = dialog.getCustomView().findViewById(R.id.tex_view);
+                        texView.setText(tex);
+                        dialog.show();
                     }
                 }
         );
