@@ -34,8 +34,8 @@ public class ConstantsListFragment extends Fragment {
                     "& = 62.363\\,577(36) \\text{ L Torr} \\text{ K}^{-1} \\text{ mol}^{-1}" +
                     "\\end{align}",
             "\\begin{align}" +
-                    "1 \\text{ atm} & = 760 \\text{ mm Hg} \\\\ " +
-                    "& = 760 \\text{ Torr} \\\\" +
+                    "1 \\text{ atm} & = 760 \\text{ mm Hg} \\\\" +
+                    "& = 760 \\text{ Torr}" +
                     "\\end{align}",
             "F = 96\\,485.332\\,89(59) \\text{ C} \\text{ mol}^{-1}}",
             "1 \\text{ amu} = 1.660\\,539\\,040(20)\\times{10^{-27}} \\text{ kg}",
