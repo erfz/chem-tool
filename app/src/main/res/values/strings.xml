@@ -17,7 +17,7 @@
     <string name="snackbar_clipboard_no_parseable_text">Clipboard doesn\'t contain usable text!</string>
     <string name="snackbar_undo_clear">Undo</string>
     <string name="snackbar_equation_copied">Equation Copied</string>
-    <string-array name="constants_array">
+    <string-array name="constants_list_data">
         <item>Planck\'s constant</item>
         <item>Speed of light</item>
         <item>Avogadro\'s number</item>

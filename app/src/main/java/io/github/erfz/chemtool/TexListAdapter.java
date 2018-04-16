@@ -10,7 +10,7 @@ import android.widget.TextView;
  * Created by erfz on 4/2/2018.
  */
 
-public class ConstantsListAdapter extends RecyclerView.Adapter<ConstantsListAdapter.ViewHolder> {
+public class TexListAdapter extends RecyclerView.Adapter<TexListAdapter.ViewHolder> {
     private String[] mDataset;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -22,16 +22,16 @@ public class ConstantsListAdapter extends RecyclerView.Adapter<ConstantsListAdap
         }
     }
 
-    public ConstantsListAdapter(String[] myDataset) {
+    public TexListAdapter(String[] myDataset) {
         mDataset = myDataset;
     }
 
     @NonNull
     @Override
-    public ConstantsListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                                              int viewType) {
+    public TexListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                        int viewType) {
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.constants_list_row, parent, false);
+                .inflate(R.layout.tex_list_row, parent, false);
         return new ViewHolder(v);
     }
 
