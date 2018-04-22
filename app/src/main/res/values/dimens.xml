@@ -4,6 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="default_margin">8dp</dimen>
     <dimen name="button_default_width">150dp</dimen>
-    <dimen name="tex_container_vertical_margin">16dp</dimen>
+    <dimen name="tex_container_min_height">64dp</dimen>
     <dimen name="dialog_horizontal_margin">24dp</dimen>
 </resources>

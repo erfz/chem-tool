@@ -41,7 +41,7 @@ public abstract class BaseTexListFragment extends Fragment {
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         MaterialDialog dialog = new MaterialDialog.Builder(requireContext())
                                 .title(((TextView) v).getText().toString())
-                                .customView(R.layout.dialog_fragment_tex, false) //TODO: add and test wrapping in ScrollView
+                                .customView(R.layout.dialog_fragment_tex, true)
                                 .positiveText("Close")
                                 .build();
                         FlexibleRichTextView texView = dialog.getCustomView().findViewById(R.id.tex_view);
