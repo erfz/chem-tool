@@ -1,1 +1,1 @@
-include ':app', ':FlexibleRichTextView'
+include ':app'
