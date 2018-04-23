@@ -12,12 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:gravity="center"
         android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="16dp">
+        android:paddingBottom="@dimen/card_inner_vertical_margin"
+        android:paddingLeft="@dimen/card_inner_horizontal_margin"
+        android:paddingRight="@dimen/card_inner_horizontal_margin"
+        android:paddingTop="@dimen/card_inner_vertical_margin">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/left_equation_hint_layout"
@@ -28,7 +27,7 @@
                 android:id="@+id/left_equation_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅· "
+                android:digits="@string/equation_valid_characters"
                 android:hint="@string/LHSEqnHint"
                 android:imeOptions="actionNext"
                 android:inputType="textVisiblePassword"
@@ -45,7 +44,7 @@
                 android:id="@+id/right_equation_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅· "
+                android:digits="@string/equation_valid_characters"
                 android:hint="@string/RHSEqnHint"
                 android:inputType="textVisiblePassword"
                 android:singleLine="true" />
@@ -55,7 +54,7 @@
         <Button
             android:id="@+id/paste_clear_button"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="@dimen/button_default_width"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/equation_paste_button"
@@ -64,7 +63,7 @@
         <Button
             android:id="@+id/balance_button"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="@dimen/button_default_width"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/balance_button"
             android:theme="@style/Balance.Button" />

@@ -3,20 +3,18 @@
     <string name="balance_page_title">Balance</string>
     <string name="constants_equations_page_title">Constants, Equations</string>
     <string name="equation_paste_button">Paste Equation</string>
-    <string name="equation_yields_symbol">→</string>
     <string name="balance_button">Balance</string>
     <string name="clear_button">Clear</string>
     <string name="LHSEqnHint">Reactants</string>
     <string name="RHSEqnHint">Products</string>
     <string name="copy_button">Copy</string>
-    <string name="constants_header">Constants</string>
-    <string name="potentials_header">Reduction Potentials</string>
     <string name="snackbar_invalid_equation">Invalid Equation!</string>
     <string name="snackbar_equation_cleared">Equation Cleared</string>
     <string name="snackbar_clipboard_no_text">Clipboard doesn\'t contain anything!</string>
     <string name="snackbar_clipboard_no_parseable_text">Clipboard doesn\'t contain usable text!</string>
     <string name="snackbar_undo_clear">Undo</string>
     <string name="snackbar_equation_copied">Equation Copied</string>
+    <string name="equation_valid_characters">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+()[].•⋅· </string>
     <string-array name="constants_list_data">
         <item>Planck\'s constant</item>
         <item>Speed of light</item>
