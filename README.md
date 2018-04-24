@@ -3,18 +3,10 @@
 - MIT License
 
 # Libraries used
-Kexanie's MathView (https://github.com/kexanie/MathView)
+FlexibleRichTextView (https://github.com/daquexian/FlexibleRichTextView)
 - APLv2 License
-    * For full license details, refer to the license file in the library's directory
+    * For full license details, refer to the license file in the repo
 - Changes made:
-    * SVG output for MathJax
-    * Updated with latest MathJax and KaTeX assets
     * Updated build files
-
-# To-do
-- More specific snackbar messages
-- Stoichi. (molecules alone and reaction calculations)
-- Add periodic table
-- Side-by-side widget positioning in landscape orientation (need fragments working)
-- Real log calls
-- AppBarLayout
+    * Code refactoring
+    * Allow for LaTeX bitmaps of arbitrary length
