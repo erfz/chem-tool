@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ChemTool.iml" filepath="$PROJECT_DIR$/ChemTool.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chem-tool.iml" filepath="$PROJECT_DIR$/chem-tool.iml" />
     </modules>
   </component>
 </project>
