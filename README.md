@@ -1,7 +1,6 @@
 # ChemTool
 - Made by Jason Guo
 - MIT License
-
 # Libraries used
 FlexibleRichTextView (https://github.com/daquexian/FlexibleRichTextView)
 - APLv2 License
