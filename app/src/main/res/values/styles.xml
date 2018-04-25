@@ -8,12 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="TabLayoutTextStyle">
-        <item name="android:textSize">13sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
     <style name="EquationInput.Button" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">#546e7a</item>
         <item name="colorControlHighlight">#33FFFFFF</item>

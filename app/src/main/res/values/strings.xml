@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ChemTool</string>
     <string name="balance_page_title">Balance</string>
-    <string name="constants_equations_page_title">Constants, Equations</string>
+    <string name="constants_page_title">Constants</string>
     <string name="equation_paste_button">Paste Equation</string>
     <string name="balance_button">Balance</string>
     <string name="clear_button">Clear</string>

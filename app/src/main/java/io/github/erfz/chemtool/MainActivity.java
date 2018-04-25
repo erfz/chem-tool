@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements
                 case 0:
                     return getResources().getString(R.string.balance_page_title);
                 case 1:
-                    return getResources().getString(R.string.constants_equations_page_title);
+                    return getResources().getString(R.string.constants_page_title);
                 default:
                     return null;
             }
